@@ -25,11 +25,11 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<view:SearchBox Grid.Row="0" Grid.Column="0" />
+		<view:SearchBox Grid.Row="0" Grid.Column="0" DataContext="{Binding Path=SearchBoxViewModel}" />
         <GridSplitter Grid.Row="1" Grid.Column="0" ResizeDirection="Rows" BorderBrush="Black" BorderThickness="1" />
-		<view:SearchResult Grid.Row="2" Grid.Column="0" />
+		<view:SearchResult Grid.Row="2" Grid.Column="0" DataContext="{Binding Path=SearchResultViewModel}" />
         <GridSplitter Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1" />
-        <view:PlaylistEditor Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" />
+        <view:PlaylistEditor Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" DataContext="{Binding Path=PlaylistEditorViewModel}"/>
 	</Grid>
 
 </Window>

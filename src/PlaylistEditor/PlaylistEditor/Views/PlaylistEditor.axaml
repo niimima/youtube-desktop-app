@@ -2,7 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PlaylistEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistEditor">
-  PlaylistEditor Control
+
+    <Design.DataContext>
+        <vm:PlaylistEditorViewModel />
+    </Design.DataContext>
+
+	<DockPanel>
+		<Button DockPanel.Dock="Bottom">Add an item</Button>
+		<ListBox DockPanel.Dock="Top" Items="{Binding PlayLists}" />
+	</DockPanel>
 </UserControl>
