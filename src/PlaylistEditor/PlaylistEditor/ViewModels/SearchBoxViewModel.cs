@@ -38,50 +38,25 @@ namespace PlaylistEditor.ViewModels
 		/// 動画を検索する
 		/// </summary>
 		/// <returns></returns>
-		public async Task Search()
+		public async Task Search(string param)
 		{
+			// 事前にクリアする
+			MainWindowViewModel.SearchResultViewModel.SearchResultList.Clear();
+
 			var factory = new YoutubeServiceFactory();
 			var service = await factory.Create();
 			var searchListRequest = service.Search.List("snippet");
-			searchListRequest.Q = "Google"; // Replace with your search term.
+			searchListRequest.Q = param;
 			searchListRequest.MaxResults = 50;
-
 			var searchListResponse = await searchListRequest.ExecuteAsync();
 			foreach (var searchResult in searchListResponse.Items)
 			{
 				switch (searchResult.Id.Kind)
 				{
 					case "youtube#video":
-						MainWindowViewModel.PlaylistEditorViewModel.PlayLists.Add($"{searchResult.Snippet.Title} ({searchResult.Id.VideoId})");
-						break;
-
-					case "youtube#channel":
-						MainWindowViewModel.PlaylistEditorViewModel.PlayLists.Add($"{searchResult.Snippet.Title} ({searchResult.Id.ChannelId})");
-						break;
-
-					case "youtube#playlist":
-						MainWindowViewModel.PlaylistEditorViewModel.PlayLists.Add($"{searchResult.Snippet.Title} ({searchResult.Id.PlaylistId})");
+						MainWindowViewModel.SearchResultViewModel.SearchResultList.Add($"{searchResult.Snippet.Title} ({searchResult.Id.VideoId})");
 						break;
 				}
-			}
-		}
-
-		/// <summary>
-		/// プレイリストを取得する
-		/// </summary>
-		/// <returns></returns>
-		public async Task GetPlaylist()
-		{
-			var factory = new YoutubeServiceFactory();
-			var service = await factory.Create();
-			var newPlaylist = service.Playlists.List("snippet");
-			// チャンネルIDを指定することでも取得可能
-			// newPlaylist.ChannelId = "UCpkkP5J-16g3zgfuIihCTrA";
-			newPlaylist.Mine = true;
-			var list = await newPlaylist.ExecuteAsync();
-			foreach (var playlist in list.Items)
-			{
-				MainWindowViewModel.PlaylistEditorViewModel.PlayLists.Add($"{playlist.Snippet.Title} ({playlist.Id})");
 			}
 		}
 

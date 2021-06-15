@@ -1,13 +1,6 @@
-﻿using System;
-using Google.Apis.YouTube.v3;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Google.Apis.Services;
-using PlaylistEditor.Models;
-using ReactiveUI;
-using System.Text.Json;
+using PlaylistEditor.Services;
 
 namespace PlaylistEditor.ViewModels
 {
@@ -25,5 +18,27 @@ namespace PlaylistEditor.ViewModels
 
 		#endregion
 
+		#region 公開サービス
+
+		/// <summary>
+		/// プレイリストを取得する
+		/// </summary>
+		/// <returns></returns>
+		public async Task GetPlaylist()
+		{
+			var factory = new YoutubeServiceFactory();
+			var service = await factory.Create();
+			var newPlaylist = service.Playlists.List("snippet");
+			// チャンネルIDを指定することでも取得可能
+			// newPlaylist.ChannelId = "UCpkkP5J-16g3zgfuIihCTrA";
+			newPlaylist.Mine = true;
+			var list = await newPlaylist.ExecuteAsync();
+			foreach (var playlist in list.Items)
+			{
+				PlayLists.Add($"{playlist.Snippet.Title} ({playlist.Id})");
+			}
+		}
+
+		#endregion
 	}
 }

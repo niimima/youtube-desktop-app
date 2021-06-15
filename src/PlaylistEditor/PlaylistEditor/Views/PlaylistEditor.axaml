@@ -5,12 +5,8 @@
              xmlns:vm="using:PlaylistEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistEditor">
-
-    <Design.DataContext>
-        <vm:PlaylistEditorViewModel />
-    </Design.DataContext>
-
 	<DockPanel>
+		<Button DockPanel.Dock="Top" Command="{Binding GetPlaylist}">Get Playlist</Button>
 		<Button DockPanel.Dock="Bottom">Add an item</Button>
 		<ListBox DockPanel.Dock="Top" Items="{Binding PlayLists}" />
 	</DockPanel>
