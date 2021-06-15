@@ -1,9 +1,4 @@
-﻿using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Google.Apis.Services;
-using Google.Apis.YouTube.v3;
-using PlaylistEditor.Models;
+﻿using System.Threading.Tasks;
 using PlaylistEditor.Services;
 
 namespace PlaylistEditor.ViewModels
@@ -46,7 +41,7 @@ namespace PlaylistEditor.ViewModels
 		public async Task Search()
 		{
 			var factory = new YoutubeServiceFactory();
-			var service = factory.Create();
+			var service = await factory.Create();
 			var searchListRequest = service.Search.List("snippet");
 			searchListRequest.Q = "Google"; // Replace with your search term.
 			searchListRequest.MaxResults = 50;
@@ -68,6 +63,25 @@ namespace PlaylistEditor.ViewModels
 						MainWindowViewModel.PlaylistEditorViewModel.PlayLists.Add($"{searchResult.Snippet.Title} ({searchResult.Id.PlaylistId})");
 						break;
 				}
+			}
+		}
+
+		/// <summary>
+		/// プレイリストを取得する
+		/// </summary>
+		/// <returns></returns>
+		public async Task GetPlaylist()
+		{
+			var factory = new YoutubeServiceFactory();
+			var service = await factory.Create();
+			var newPlaylist = service.Playlists.List("snippet");
+			// チャンネルIDを指定することでも取得可能
+			// newPlaylist.ChannelId = "UCpkkP5J-16g3zgfuIihCTrA";
+			newPlaylist.Mine = true;
+			var list = await newPlaylist.ExecuteAsync();
+			foreach (var playlist in list.Items)
+			{
+				MainWindowViewModel.PlaylistEditorViewModel.PlayLists.Add($"{playlist.Snippet.Title} ({playlist.Id})");
 			}
 		}
 

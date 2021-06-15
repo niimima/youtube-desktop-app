@@ -12,8 +12,13 @@ namespace PlaylistEditor.Models
 	internal class Settings
 	{
 		/// <summary>
-		/// APIキー
+		/// クライエントID
 		/// </summary>
-		public string ApiKey { get; set; } = string.Empty;
+		public string ClientId { get; set; } = string.Empty;
+
+		/// <summary>
+		/// クライエントシークレット
+		/// </summary>
+		public string ClientSecret { get; set; } = string.Empty;
 	}
 }

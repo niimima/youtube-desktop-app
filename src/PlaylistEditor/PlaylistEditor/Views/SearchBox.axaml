@@ -4,5 +4,5 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.SearchBox">
-	<Button HorizontalAlignment="Center" Command="{Binding Search}">Search Button</Button>
+	<Button HorizontalAlignment="Center" Command="{Binding GetPlaylist}">Search Button</Button>
 </UserControl>
