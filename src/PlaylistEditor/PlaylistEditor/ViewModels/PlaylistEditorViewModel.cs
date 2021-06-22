@@ -27,7 +27,7 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// プレイリスト一覧
 		/// </summary>
-		public ObservableCollection<string> PlayLists { get; set; } = new ObservableCollection<string>();
+		public ObservableCollection<PlaylistViewModel> Playlists { get; set; } = new ObservableCollection<PlaylistViewModel>();
 
 		/// <summary>
 		/// 追加するプレイリスト名
@@ -64,7 +64,7 @@ namespace PlaylistEditor.ViewModels
 		public async Task GetPlaylist()
 		{
 			// Playlistをクリアする
-			PlayLists.Clear();
+			Playlists.Clear();
 
 			var factory = new YoutubeServiceFactory();
 			var service = await factory.Create();
@@ -75,7 +75,8 @@ namespace PlaylistEditor.ViewModels
 			var list = await newPlaylist.ExecuteAsync();
 			foreach (var playlist in list.Items)
 			{
-				PlayLists.Add($"{playlist.Snippet.Title} ({playlist.Id})");
+				var playlistVm = new PlaylistViewModel(playlist, this);
+				Playlists.Add(playlistVm);
 			}
 		}
 
