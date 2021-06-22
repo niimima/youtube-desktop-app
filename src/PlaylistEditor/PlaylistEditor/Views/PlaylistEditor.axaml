@@ -6,8 +6,15 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistEditor">
 	<DockPanel>
-		<Button DockPanel.Dock="Top" Command="{Binding GetPlaylist}">Get Playlist</Button>
-		<Button DockPanel.Dock="Bottom">Add an item</Button>
+		<Button DockPanel.Dock="Top" Margin="5"
+				Command="{Binding GetPlaylist}">Get Playlist</Button>
+		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+			<Button Margin="5" Command="{Binding AddPlaylist}">Add an item</Button>
+			<TextBox Margin="5" Width="200"
+					 Watermark="Input Playlist Title" Text="{Binding Path=AddPlaylistTitle.Value}" />
+			<TextBox Margin="5" Width="400"
+					 Watermark="Input Playlist Description" Text="{Binding Path=AddPlaylistDescription.Value}" />
+		</StackPanel>
 		<ListBox DockPanel.Dock="Top" Items="{Binding PlayLists}" />
 	</DockPanel>
 </UserControl>
