@@ -105,6 +105,22 @@ namespace PlaylistEditor.ViewModels
 			await GetPlaylist();
 		}
 
+		/// <summary>
+		/// プレイリストを削除する
+		/// </summary>
+		/// <param name="id">プレイリストのID</param>
+		/// <returns></returns>
+		public async Task DeletePlaylist(string id)
+		{
+			// 入力結果からプレイリストを追加する
+			var factory = new YoutubeServiceFactory();
+			var service = await factory.Create();
+			await service.Playlists.Delete(id).ExecuteAsync();
+
+			// プレイリスト一覧を更新
+			await GetPlaylist();
+		}
+
 		#endregion
 	}
 }
