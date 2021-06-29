@@ -6,8 +6,12 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistEditor">
 	<DockPanel>
-		<Button DockPanel.Dock="Top" Margin="5"
-				Command="{Binding GetPlaylist}">Get Playlist</Button>
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+			<Button Margin="5" Command="{Binding GetPlaylist}">Get Playlist</Button>
+			<Button Margin="5" Command="{Binding AddVideoToPlaylist}">Add Video</Button>
+			<TextBox Margin="5" Width="200"
+					 Watermark="Input Video Id" Text="{Binding Path=AddVideoId.Value}" />
+		</StackPanel>
 		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
 			<Button Margin="5" Command="{Binding AddPlaylist}">Add an item</Button>
 			<TextBox Margin="5" Width="200"
@@ -15,7 +19,7 @@
 			<TextBox Margin="5" Width="400"
 					 Watermark="Input Playlist Description" Text="{Binding Path=AddPlaylistDescription.Value}" />
 		</StackPanel>
-		<ListBox DockPanel.Dock="Top" Items="{Binding Playlists}">
+		<ListBox DockPanel.Dock="Top" Items="{Binding PlaylistViewModels}" SelectedItem="{Binding SelectedPlaylistViewModel.Value}">
 			<ListBox.DataTemplates>
 				<DataTemplate DataType="{x:Type vm:PlaylistViewModel}">
 					<StackPanel Orientation="Horizontal">

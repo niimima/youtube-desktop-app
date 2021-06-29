@@ -30,7 +30,7 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// プレイリスト
 		/// </summary>
-		private Playlist Playlist;
+		public Playlist Playlist;
 
 		/// <summary>
 		/// オーナーであるプレイリストエディタのVM
