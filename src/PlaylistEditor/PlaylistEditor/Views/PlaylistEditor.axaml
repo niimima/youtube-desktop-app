@@ -22,10 +22,13 @@
 		<ListBox DockPanel.Dock="Top" Items="{Binding PlaylistViewModels}" SelectedItem="{Binding SelectedPlaylistViewModel.Value}">
 			<ListBox.DataTemplates>
 				<DataTemplate DataType="{x:Type vm:PlaylistViewModel}">
-					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="{Binding Title}" />
-						<Button Content="Delete" Command="{Binding DeletePlaylist}" />
-					</StackPanel>
+					<DockPanel>
+						<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+							<TextBlock Text="{Binding Title}" />
+							<Button Content="Delete" Command="{Binding DeletePlaylist}" />
+						</StackPanel>
+						<ListBox DockPanel.Dock="Bottom" Items="{Binding PlaylistItemViewModels}" />
+					</DockPanel>
 				</DataTemplate>
 			</ListBox.DataTemplates>
 		</ListBox>

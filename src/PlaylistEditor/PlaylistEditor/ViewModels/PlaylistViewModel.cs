@@ -4,6 +4,7 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Text;
@@ -31,6 +32,11 @@ namespace PlaylistEditor.ViewModels
 		/// プレイリスト
 		/// </summary>
 		public Playlist Playlist;
+
+		/// <summary>
+		/// プレイリストに所属する要素のVMの一覧
+		/// </summary>
+		public ObservableCollection<PlaylistItemViewModel> PlaylistItemViewModels { get; } = new ObservableCollection<PlaylistItemViewModel>();
 
 		/// <summary>
 		/// オーナーであるプレイリストエディタのVM
