@@ -27,8 +27,20 @@
 							<TextBlock Text="{Binding Title}" />
 							<Button Content="Delete" Command="{Binding DeletePlaylist}" />
 						</StackPanel>
-						<ListBox DockPanel.Dock="Bottom" Items="{Binding PlaylistItemViewModels}" />
+						<ListBox DockPanel.Dock="Bottom" Items="{Binding PlaylistItemViewModels}">
+							<ListBox.ItemsPanel>
+								<ItemsPanelTemplate>
+									<WrapPanel Orientation="Horizontal" />
+								</ItemsPanelTemplate>
+							</ListBox.ItemsPanel>
+						</ListBox>
 					</DockPanel>
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type vm:PlaylistItemViewModel}">
+					<StackPanel>
+						<TextBlock Text="{Binding Title}" />
+						<Image Width="160" Height="120" Source="{Binding Image.Value}" />
+					</StackPanel>
 				</DataTemplate>
 			</ListBox.DataTemplates>
 		</ListBox>
