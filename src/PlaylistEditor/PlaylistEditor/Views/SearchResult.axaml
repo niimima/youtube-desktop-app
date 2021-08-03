@@ -2,7 +2,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:PlaylistEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.SearchResult">
-	<ListBox Items="{Binding SearchResultList}" />
+	<ListBox Name="SearchResultListBox" Items="{Binding SearchResultList}" SelectedItem="{Binding SelectedItem.Value}">
+		<ListBox.DataTemplates>
+			<DataTemplate DataType="{x:Type vm:SearchResultItemViewModel}">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="{Binding Title}" />
+					<TextBlock Text=" : " />
+					<TextBlock Text="{Binding Id}" />
+				</StackPanel>
+			</DataTemplate>
+		</ListBox.DataTemplates>
+	</ListBox>
 </UserControl>

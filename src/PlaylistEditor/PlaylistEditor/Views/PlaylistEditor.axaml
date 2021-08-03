@@ -9,8 +9,11 @@
 		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
 			<Button Margin="5" Command="{Binding GetPlaylist}">Get Playlist</Button>
 			<Button Margin="5" Command="{Binding AddVideoToPlaylist}">Add Video</Button>
-			<TextBox Margin="5" Width="200"
+			<TextBox  Margin="5" Width="200"
 					 Watermark="Input Video Id" Text="{Binding Path=AddVideoId.Value}" />
+			<Border Background="{DynamicResource SystemAccentColorDark1}" Padding="16" DragDrop.AllowDrop="True">
+				<TextBlock Name="DropState">Drop some text or files here</TextBlock>
+			</Border>
 		</StackPanel>
 		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
 			<Button Margin="5" Command="{Binding AddPlaylist}">Add an item</Button>
