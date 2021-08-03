@@ -19,6 +19,11 @@
     <PackageReference Include="RestSharp" Version="106.11.7" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\PlaylistControl.axaml.cs">
+      <DependentUpon>PlaylistControl.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="local.settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

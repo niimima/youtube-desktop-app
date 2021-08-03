@@ -41,7 +41,7 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// オーナーであるプレイリストエディタのVM
 		/// </summary>
-		private PlaylistEditorViewModel PlaylistEditorViewModel;
+		public PlaylistEditorViewModel PlaylistEditorViewModel;
 
 		/// <summary>
 		/// プレイリストのタイトル
@@ -87,6 +87,33 @@ namespace PlaylistEditor.ViewModels
 		{
 			await PlaylistEditorViewModel.DeletePlaylist(Id);
 		}
+
+		/// <summary>
+		/// ビデオをプレイリストに追加する
+		/// </summary>
+		/// <param name="id">ID</param>
+		/// <returns></returns>
+		public async Task AddVideoToPlaylist(string id)
+		{
+			// 入力の検証
+			var playlistVm = this;
+			var videoId = id;
+			if (playlistVm == null || string.IsNullOrEmpty(videoId)) return;
+
+			// 以下を参考にプレイリストに指定の動画を追加
+			// https://github.com/youtube/api-samples/blob/master/dotnet/Google.Apis.YouTube.Samples.Playlists/PlaylistUpdates.cs#L94
+			var factory = new YoutubeServiceFactory();
+			var service = await factory.Create();
+			var playlistItem = new PlaylistItem();
+			playlistItem.Snippet = new PlaylistItemSnippet();
+			playlistItem.Snippet.PlaylistId = playlistVm.Id;
+			playlistItem.Snippet.ResourceId = new ResourceId();
+			playlistItem.Snippet.ResourceId.Kind = "youtube#video";
+			playlistItem.Snippet.ResourceId.VideoId = videoId;
+			playlistItem = await service.PlaylistItems.Insert(playlistItem, "snippet").ExecuteAsync();
+			PlaylistItemViewModels.Add(new PlaylistItemViewModel(playlistItem));
+		}
+
 
 		#endregion
 	}

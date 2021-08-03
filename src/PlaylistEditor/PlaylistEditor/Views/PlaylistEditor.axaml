@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PlaylistEditor.ViewModels"
+             xmlns:v="using:PlaylistEditor.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistEditor">
 	<DockPanel>
@@ -25,25 +26,7 @@
 		<ListBox DockPanel.Dock="Top" Items="{Binding PlaylistViewModels}" SelectedItem="{Binding SelectedPlaylistViewModel.Value}">
 			<ListBox.DataTemplates>
 				<DataTemplate DataType="{x:Type vm:PlaylistViewModel}">
-					<DockPanel>
-						<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-							<TextBlock Text="{Binding Title}" />
-							<Button Content="Delete" Command="{Binding DeletePlaylist}" />
-						</StackPanel>
-						<ListBox DockPanel.Dock="Bottom" Items="{Binding PlaylistItemViewModels}">
-							<ListBox.ItemsPanel>
-								<ItemsPanelTemplate>
-									<WrapPanel Orientation="Horizontal" />
-								</ItemsPanelTemplate>
-							</ListBox.ItemsPanel>
-						</ListBox>
-					</DockPanel>
-				</DataTemplate>
-				<DataTemplate DataType="{x:Type vm:PlaylistItemViewModel}">
-					<StackPanel>
-						<TextBlock Text="{Binding Title}" />
-						<Image Width="160" Height="120" Source="{Binding Image.Value}" />
-					</StackPanel>
+					<v:PlaylistControl />
 				</DataTemplate>
 			</ListBox.DataTemplates>
 		</ListBox>
