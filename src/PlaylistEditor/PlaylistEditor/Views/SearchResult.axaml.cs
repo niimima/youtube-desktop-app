@@ -26,7 +26,7 @@ namespace PlaylistEditor.Views
         {
             InitializeComponent();
 
-            // TODO ハンドラ登録のやり方が分からず、ネットで調査した内容を
+            // TODO ハンドラ登録のやり方が分からず、ネットで調査した内容をそのまま利用している
             m_SearchResultListBox = this.Find<ListBox>("SearchResultListBox");
 			m_SearchResultListBox.AddHandler(PointerPressedEvent, DoDrag, handledEventsToo: true);
         }

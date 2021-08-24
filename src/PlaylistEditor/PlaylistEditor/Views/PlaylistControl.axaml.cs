@@ -14,10 +14,10 @@ namespace PlaylistEditor.Views
 	{
 		#region フィールド
 
-        /// <summary>
-        /// カスタムフォーマット
-        /// </summary>
-        private const string CustomFormat = "application/xxx-avalonia-controlcatalog-custom";
+		/// <summary>
+		/// プレイリストコントロールのリストボックス
+		/// </summary>
+		private ListBox m_PlaylistControlListBox;
 
 		#endregion
 
@@ -31,6 +31,11 @@ namespace PlaylistEditor.Views
 			InitializeComponent();
 
             SetupDnd();
+
+            // TODO ハンドラ登録のやり方が分からず、ネットで調査した内容をそのまま利用している
+            m_PlaylistControlListBox = this.Find<ListBox>("PlaylistControlListBox");
+			m_PlaylistControlListBox.AddHandler(PointerPressedEvent, DoDrag, handledEventsToo: true);
+
 		}
 
 		#endregion
@@ -48,15 +53,21 @@ namespace PlaylistEditor.Views
                 e.DragEffects = e.DragEffects & (DragDropEffects.Copy | DragDropEffects.Link);
 
                 // Only allow if the dragged data contains text or filenames.
-                if (!e.Data.Contains(DataFormats.Text))
+                if (!e.Data.Contains("PlaylistItem") || !e.Data.Contains("Movie"))
                     e.DragEffects = DragDropEffects.None;
             }
 
             void Drop(object sender, DragEventArgs e)
             {
-                if (e.Data.Contains(DataFormats.Text))
+                if (e.Data.Contains("Movie"))
 				{
-					_ = ((PlaylistViewModel)DataContext).AddVideoToPlaylist(e.Data.GetText());
+					_ = ((PlaylistViewModel)DataContext).AddVideoToPlaylist((string)e.Data.Get("Movie"));
+				}
+				else if(e.Data.Contains("PlaylistItem"))
+				{
+					var vm = (PlaylistItemViewModel)e.Data.Get("PlaylistItem");
+					((PlaylistViewModel)DataContext).AddPlaylistItem(vm);
+					vm.PlaylistViewModel.RemovePlaylistItem(vm.Id);
 				}
             }
 
@@ -64,6 +75,20 @@ namespace PlaylistEditor.Views
             AddHandler(DragDrop.DragOverEvent, DragOver);
         }
 
+        /// <summary>
+        /// ドラッグする
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void DoDrag(object? sender, PointerPressedEventArgs e)
+		{
+            if (m_PlaylistControlListBox.DataContext is not PlaylistViewModel vm) return;
+            if (vm.SelectedItem == null) return;
+
+            var dragData = new DataObject();
+			dragData.Set("PlaylistItem", vm.SelectedItem.Value);
+            DragDrop.DoDragDrop(e, dragData, DragDropEffects.Copy);
+		}
 
 		/// <summary>
 		/// コンポーネントの初期化

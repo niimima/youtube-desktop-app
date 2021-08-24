@@ -38,6 +38,12 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		public ObservableCollection<PlaylistItemViewModel> PlaylistItemViewModels { get; } = new ObservableCollection<PlaylistItemViewModel>();
 
+
+		/// <summary>
+		/// プレイリストに所属する要素のVMの一覧で選択されたアイテム
+		/// </summary>
+		public ReactivePropertySlim<PlaylistItemViewModel> SelectedItem { get; set; }
+
 		/// <summary>
 		/// オーナーであるプレイリストエディタのVM
 		/// </summary>
@@ -64,6 +70,7 @@ namespace PlaylistEditor.ViewModels
 		{
 			Playlist = playlist;
 			PlaylistEditorViewModel = playlistEditorViewModel;
+			SelectedItem = new ReactivePropertySlim<PlaylistItemViewModel>().AddTo(m_Disposables);
 		}
 
 		#endregion
@@ -111,9 +118,42 @@ namespace PlaylistEditor.ViewModels
 			playlistItem.Snippet.ResourceId.Kind = "youtube#video";
 			playlistItem.Snippet.ResourceId.VideoId = videoId;
 			playlistItem = await service.PlaylistItems.Insert(playlistItem, "snippet").ExecuteAsync();
-			PlaylistItemViewModels.Add(new PlaylistItemViewModel(playlistItem));
+			PlaylistItemViewModels.Add(new PlaylistItemViewModel(playlistItem, this));
 		}
 
+
+		/// <summary>
+		/// プレイリストのアイテムを削除します
+		/// </summary>
+		/// <param name="id">ID</param>
+		internal async void RemovePlaylistItem(string id)
+		{
+			var factory = new YoutubeServiceFactory();
+			var service = await factory.Create();
+			await service.PlaylistItems.Delete(id).ExecuteAsync();
+
+			// VMからも一致するアイテムを削除する
+			PlaylistItemViewModels.Remove(PlaylistItemViewModels.First(item => item.Id == id));
+		}
+
+		/// <summary>
+		/// プレイリストのアイテムを追加します
+		/// </summary>
+		/// <param name="vm">ViewModel</param>
+		/// <returns></returns>
+		internal async void AddPlaylistItem(PlaylistItemViewModel vm)
+		{
+			// 以下を参考にプレイリストに指定の動画を追加
+			// https://github.com/youtube/api-samples/blob/master/dotnet/Google.Apis.YouTube.Samples.Playlists/PlaylistUpdates.cs#L94
+			var factory = new YoutubeServiceFactory();
+			var service = await factory.Create();
+			var playlistItem = new PlaylistItem();
+			playlistItem.Snippet = new PlaylistItemSnippet();
+			playlistItem.Snippet.PlaylistId = Playlist.Id;
+			playlistItem.Snippet.ResourceId = vm.PlaylistItem.Snippet.ResourceId;
+			playlistItem = await service.PlaylistItems.Insert(playlistItem, "snippet").ExecuteAsync();
+			PlaylistItemViewModels.Add(new PlaylistItemViewModel(playlistItem, this));
+		}
 
 		#endregion
 	}

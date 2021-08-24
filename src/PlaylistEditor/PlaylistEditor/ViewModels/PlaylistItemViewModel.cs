@@ -32,9 +32,10 @@ namespace PlaylistEditor.ViewModels
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="playlistItem">プレイリストに所属する要素</param>
-		public PlaylistItemViewModel(PlaylistItem playlistItem)
+		public PlaylistItemViewModel(PlaylistItem playlistItem, PlaylistViewModel playlistViewModel)
 		{
 			PlaylistItem = playlistItem;
+			PlaylistViewModel = playlistViewModel;
 			Image = new ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap>().AddTo(m_Disposables);
 			DownloadImage(PlaylistItem.Snippet.Thumbnails.Default__.Url);
 		}
@@ -57,6 +58,16 @@ namespace PlaylistEditor.ViewModels
 		/// サムネイル画像
 		/// </summary>
 		public ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap> Image { get; }
+
+		/// <summary>
+		/// ID
+		/// </summary>
+		public string Id => PlaylistItem.Id;
+
+		/// <summary>
+		/// 所属するプレイリストのVM
+		/// </summary>
+		public PlaylistViewModel PlaylistViewModel { get; }
 
 		#endregion
 

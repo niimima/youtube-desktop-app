@@ -37,7 +37,7 @@ namespace PlaylistEditor.ViewModels
 		public ObservableCollection<SearchResultItemViewModel> SearchResultList { get; set; } = new ObservableCollection<SearchResultItemViewModel>();
 
 		/// <summary>
-		/// 検索結果一覧
+		/// 検索結果一覧で選択されたアイテム
 		/// </summary>
 		public ReactivePropertySlim<SearchResultItemViewModel> SelectedItem { get; set; }
 

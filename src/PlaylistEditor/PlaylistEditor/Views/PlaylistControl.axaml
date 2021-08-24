@@ -21,7 +21,7 @@
 			<TextBlock Text="{Binding Title}" />
 			<Button Content="Delete" Command="{Binding DeletePlaylist}" />
 		</StackPanel>
-		<ListBox DockPanel.Dock="Bottom" Items="{Binding PlaylistItemViewModels}">
+		<ListBox Name="PlaylistControlListBox" DockPanel.Dock="Bottom" Items="{Binding PlaylistItemViewModels}"  SelectedItem="{Binding SelectedItem.Value}">
 			<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
 					<WrapPanel Orientation="Horizontal" />

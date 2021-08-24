@@ -81,6 +81,8 @@ namespace PlaylistEditor.ViewModels
 			var service = await factory.Create();
 			var newPlaylist = service.Playlists.List("snippet");
 			var newPlaylistItem = service.PlaylistItems.List("snippet");
+			// 100件まで編集可能とする
+			newPlaylistItem.MaxResults = 100;
 			// チャンネルIDを指定することでも取得可能
 			// newPlaylist.ChannelId = "UCpkkP5J-16g3zgfuIihCTrA";
 			newPlaylist.Mine = true;
@@ -94,7 +96,7 @@ namespace PlaylistEditor.ViewModels
 				var item = await newPlaylistItem.ExecuteAsync();
 				foreach (var playlistItem in item.Items)
 				{
-					playlistVm.PlaylistItemViewModels.Add(new PlaylistItemViewModel(playlistItem));
+					playlistVm.PlaylistItemViewModels.Add(new PlaylistItemViewModel(playlistItem, playlistVm));
 				}
 			}
 		}
@@ -165,7 +167,7 @@ namespace PlaylistEditor.ViewModels
 			playlistItem.Snippet.ResourceId.Kind = "youtube#video";
 			playlistItem.Snippet.ResourceId.VideoId = videoId;
 			playlistItem = await service.PlaylistItems.Insert(playlistItem, "snippet").ExecuteAsync();
-			SelectedPlaylistViewModel.Value.PlaylistItemViewModels.Add(new PlaylistItemViewModel(playlistItem));
+			SelectedPlaylistViewModel.Value.PlaylistItemViewModels.Add(new PlaylistItemViewModel(playlistItem, playlistVm));
 		}
 
 		#endregion
