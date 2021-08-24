@@ -46,7 +46,7 @@ namespace PlaylistEditor.Views
             if (vm.SelectedItem == null) return;
 
             var dragData = new DataObject();
-			dragData.Set(DataFormats.Text, vm.SelectedItem.Value.Id);
+			dragData.Set("Movie", vm.SelectedItem.Value.Id);
             DragDrop.DoDragDrop(e, dragData, DragDropEffects.Copy);
 		}
 
