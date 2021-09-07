@@ -16,17 +16,27 @@
 		</DataTemplate>
 	</UserControl.DataTemplates>
 
-	<DockPanel>
-		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-			<TextBlock Text="{Binding Title}" />
-			<Button Content="Delete" Command="{Binding DeletePlaylist}" />
-		</StackPanel>
-		<ListBox Name="PlaylistControlListBox" DockPanel.Dock="Bottom" Items="{Binding PlaylistItemViewModels}"  SelectedItem="{Binding SelectedItem.Value}">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition Width="100" />
+		</Grid.ColumnDefinitions>
+		<TextBlock Grid.Row="0" Grid.Column="0"
+				   Text="{Binding Title}" Margin="5"
+				   VerticalAlignment="Center" HorizontalAlignment="Left" />
+		<Button Grid.Row="0" Grid.Column="1"
+				Content="Delete" Margin="5" Command="{Binding DeletePlaylist}" />
+		<ListBox Name="PlaylistControlListBox" Grid.Row="1" Grid.ColumnSpan="2"
+				 Items="{Binding PlaylistItemViewModels}"  SelectedItem="{Binding SelectedItem.Value}">
 			<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
 					<WrapPanel Orientation="Horizontal" />
 				</ItemsPanelTemplate>
 			</ListBox.ItemsPanel>
 		</ListBox>
-	</DockPanel>
+	</Grid>
 </UserControl>

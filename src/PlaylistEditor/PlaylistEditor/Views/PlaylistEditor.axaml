@@ -21,6 +21,11 @@
 					 Watermark="Input Playlist Description" Text="{Binding Path=AddPlaylistDescription.Value}" />
 		</StackPanel>
 		<ListBox DockPanel.Dock="Top" Items="{Binding PlaylistViewModels}" SelectedItem="{Binding SelectedPlaylistViewModel.Value}">
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem">
+					<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+				</Style>
+			</ListBox.Styles>
 			<ListBox.DataTemplates>
 				<DataTemplate DataType="{x:Type vm:PlaylistViewModel}">
 					<v:PlaylistControl />

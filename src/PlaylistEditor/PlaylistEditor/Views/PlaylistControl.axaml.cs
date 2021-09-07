@@ -65,7 +65,9 @@ namespace PlaylistEditor.Views
 				}
 				else if(e.Data.Contains("PlaylistItem"))
 				{
-					var vm = (PlaylistItemViewModel)e.Data.Get("PlaylistItem");
+					var vm = (PlaylistItemViewModel?)e.Data.Get("PlaylistItem");
+					if (vm is null) return;
+
 					((PlaylistViewModel)DataContext).AddPlaylistItem(vm);
 					vm.PlaylistViewModel.RemovePlaylistItem(vm.Id);
 				}
