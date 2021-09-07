@@ -9,10 +9,20 @@
 			 DragDrop.AllowDrop="True">
 	<UserControl.DataTemplates>
 		<DataTemplate DataType="{x:Type vm:PlaylistItemViewModel}">
-			<StackPanel>
-				<TextBlock Text="{Binding Title}" />
-				<Image Width="160" Height="120" Source="{Binding Image.Value}" />
-			</StackPanel>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40" />
+					<RowDefinition Height="80" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="160"/>
+					<ColumnDefinition Width="160" />
+				</Grid.ColumnDefinitions>
+				<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+					   Source="{Binding Image.Value}" />
+				<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" />
+				<TextBlock Grid.Row="1" Grid.Column="1" Text="Description" />
+			</Grid>
 		</DataTemplate>
 	</UserControl.DataTemplates>
 
