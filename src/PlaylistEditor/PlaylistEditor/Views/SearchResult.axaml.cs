@@ -43,7 +43,7 @@ namespace PlaylistEditor.Views
 		private void DoDrag(object? sender, PointerPressedEventArgs e)
 		{
             if (m_SearchResultListBox.DataContext is not SearchResultViewModel vm) return;
-            if (vm.SelectedItem == null) return;
+            if (vm.SelectedItem.Value == null) return;
 
             var dragData = new DataObject();
 			dragData.Set("Movie", vm.SelectedItem.Value.Id);

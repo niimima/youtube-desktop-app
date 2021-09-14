@@ -54,7 +54,7 @@ namespace PlaylistEditor.ViewModels
 				switch (searchResult.Id.Kind)
 				{
 					case "youtube#video":
-						MainWindowViewModel.SearchResultViewModel.SearchResultList.Add(new SearchResultItemViewModel(searchResult.Id.VideoId, searchResult.Snippet.Title));
+						MainWindowViewModel.SearchResultViewModel.SearchResultList.Add(new SearchResultItemViewModel(searchResult.Id.VideoId, searchResult.Snippet.Title, searchResult.Snippet.Description, searchResult.Snippet.Thumbnails.Default__.Url));
 						break;
 				}
 			}

@@ -8,11 +8,27 @@
 	<ListBox Name="SearchResultListBox" Items="{Binding SearchResultList}" SelectedItem="{Binding SelectedItem.Value}">
 		<ListBox.DataTemplates>
 			<DataTemplate DataType="{x:Type vm:SearchResultItemViewModel}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="40" />
+						<RowDefinition Height="80" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="160"/>
+						<ColumnDefinition Width="160" />
+					</Grid.ColumnDefinitions>
+					<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+						   Source="{Binding Image.Value}" />
+					<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
+					<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
+				</Grid>
+				<!--
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="{Binding Title}" />
 					<TextBlock Text=" : " />
 					<TextBlock Text="{Binding Id}" />
 				</StackPanel>
+				-->
 			</DataTemplate>
 		</ListBox.DataTemplates>
 	</ListBox>
