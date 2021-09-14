@@ -65,6 +65,11 @@ namespace PlaylistEditor.ViewModels
 		public string Id => PlaylistItem.Id;
 
 		/// <summary>
+		/// 動画の説明
+		/// </summary>
+		public string Description => PlaylistItem.Snippet.Description;
+
+		/// <summary>
 		/// 所属するプレイリストのVM
 		/// </summary>
 		public PlaylistViewModel PlaylistViewModel { get; }
