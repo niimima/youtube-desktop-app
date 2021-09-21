@@ -1,14 +1,8 @@
 ﻿using Google.Apis.YouTube.v3.Data;
+using PlaylistEditor.Services;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Reactive.Disposables;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlaylistEditor.ViewModels
 {
@@ -37,7 +31,8 @@ namespace PlaylistEditor.ViewModels
 			PlaylistItem = playlistItem;
 			PlaylistViewModel = playlistViewModel;
 			Image = new ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap>().AddTo(m_Disposables);
-			DownloadImage(PlaylistItem.Snippet.Thumbnails.Default__.Url);
+			var client = new WebClientService();
+			client.DownloadImage(PlaylistItem.Snippet.Thumbnails.Default__.Url, Image);
 		}
 
 		#endregion
@@ -81,48 +76,6 @@ namespace PlaylistEditor.ViewModels
 		public override string ToString()
 		{
 			return $"Title: {Title}";
-		}
-
-		/*
-		Image DownloadImage(string fromUrl)
-		{
-			using (System.Net.WebClient webClient = new System.Net.WebClient())
-			{
-				Image image;
-				using (Stream stream = webClient.OpenRead(fromUrl))
-				{
-					image = System.Drawing.Image.FromStream(stream);
-				}
-				return image;
-			}
-		}
-		*/
-
-		public void DownloadImage(string url)
-		{
-			using (System.Net.WebClient client = new System.Net.WebClient())
-            {
-                client.DownloadDataAsync(new Uri(url));
-				client.DownloadDataCompleted += ClientDownloadDataCompleted;
-            }
-        }
-
-		private void ClientDownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
-		{
-			try
-			{
-				byte[] bytes = e.Result;
-
-				Stream stream = new MemoryStream(bytes);
-
-				var image = new Avalonia.Media.Imaging.Bitmap(stream);
-				Image.Value = image;
-			}
-			catch (Exception ex)
-			{
-				System.Diagnostics.Debug.WriteLine(ex);
-				Image.Value = null; // Could not download...
-			}
 		}
 
 		#endregion

@@ -1,12 +1,7 @@
-﻿using Reactive.Bindings;
+﻿using PlaylistEditor.Services;
+using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reactive.Disposables;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlaylistEditor.ViewModels
 {
@@ -39,7 +34,8 @@ namespace PlaylistEditor.ViewModels
 			Title = title;
 			Description = description;
 			Image = new ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap>().AddTo(m_Disposables);
-			DownloadImage(url);
+			var client = new WebClientService();
+			client.DownloadImage(url, Image);
 		}
 
 		#endregion
@@ -73,36 +69,6 @@ namespace PlaylistEditor.ViewModels
 		public override string ToString()
 		{
 			return $"{Title} ({Id})";
-		}
-
-		#endregion
-
-		#region 内部処理
-		public void DownloadImage(string url)
-		{
-			using (System.Net.WebClient client = new System.Net.WebClient())
-            {
-                client.DownloadDataAsync(new Uri(url));
-				client.DownloadDataCompleted += ClientDownloadDataCompleted;
-            }
-        }
-
-		private void ClientDownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
-		{
-			try
-			{
-				byte[] bytes = e.Result;
-
-				Stream stream = new MemoryStream(bytes);
-
-				var image = new Avalonia.Media.Imaging.Bitmap(stream);
-				Image.Value = image;
-			}
-			catch (Exception ex)
-			{
-				System.Diagnostics.Debug.WriteLine(ex);
-				Image.Value = null; // Could not download...
-			}
 		}
 
 		#endregion
