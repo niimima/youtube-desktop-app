@@ -8,13 +8,11 @@
              x:Class="PlaylistEditor.Views.PlaylistEditor">
 	<DockPanel>
 		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-			<Button Margin="5" Command="{Binding GetPlaylist}">Get Playlist</Button>
+			<Button Margin="5" Command="{Binding GetPlaylist}">Reload</Button>
 			<Button Margin="5" Command="{Binding AddVideoToPlaylist}">Add Video</Button>
 			<TextBox  Margin="5" Width="200"
 					 Watermark="Input Video Id" Text="{Binding Path=AddVideoId.Value}" />
-		</StackPanel>
-		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-			<Button Margin="5" Command="{Binding AddPlaylist}">Add an item</Button>
+			<Button Margin="5" Command="{Binding AddPlaylist}">Add Playlist</Button>
 			<TextBox Margin="5" Width="200"
 					 Watermark="Input Playlist Title" Text="{Binding Path=AddPlaylistTitle.Value}" />
 			<TextBox Margin="5" Width="400"
