@@ -1,0 +1,220 @@
+﻿<?Infragistics.Models format="xaml" version="30" appVersion="12.0.2000.16"?>
+<Page xmlns="http://prototypes.infragistics.com/"
+                                                                                    Id="dbdd0530-4f00-4fa2-bc83-3de6bab5ec87">
+    <Page.Content>
+        <Content Width="1025" Height="871" Id="d2e78cfd-9cce-4794-a349-c267b8384f42">
+            <Content.Layers>
+                <Layer Id="025e0977-3071-4998-8338-d1b1bcd464ce" Panel.Layout="Stretch" />
+                <AnnotationsLayer Id="93f1a83a-c59b-46db-a20f-ada62eef3f5c" Panel.Layout="Stretch" />
+            </Content.Layers>
+            <Content.Viewbox>
+                <Viewbox Id="a89771e8-5a7e-40e8-b617-a384f67f78cd" />
+            </Content.Viewbox>
+            <Content.GuidesInfo>
+                <GuidesInfo Id="53f9ae10-fa33-4733-b401-15915115430d" />
+            </Content.GuidesInfo>
+        </Content>
+    </Page.Content>
+    <Page.Device>
+        <DeviceInfo Id="none" Orientation="None" />
+    </Page.Device>
+    <Page.Scenes>
+        <Scene Title="Start" Created="10/19/2021 05:20:26" Id="2dad1296-cd7e-4543-b5d2-146a914f6963">
+            <Scene.KeyFrames>
+                <KeyFrame Id="a48a36c1-1464-4773-8e91-779307fe2a59">
+                    <KeyFrame.Operations>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <ListBox FontFamily="Noto Sans JP" Id="7e78ea61-7c36-4e69-b62b-c974b8217d5f" Panel.Bounds="223,172,382{5,2147483647},595{5,2147483647}">
+                                    <ListBox.Items>
+                                        <Item Text="Item1" Id="a95f5175-f54b-46f4-b206-0754fe7527c5" />
+                                        <Item Text="Item2" Id="b2e982cc-b236-4b9f-b580-a141adf91c7f" />
+                                    </ListBox.Items>
+                                </ListBox>
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <ListBox FontFamily="Noto Sans JP" Id="593164f4-28b8-47fc-9de3-fbf2fa45d9ca" Panel.Bounds="627,172,382{5,2147483647},595{5,2147483647}">
+                                    <ListBox.Items>
+                                        <Item Text="Item 1" Id="1122c437-3fc2-4b20-a2fb-049feaa83fea" />
+                                        <Item Text="Item 2" Id="0fa54e27-f0a6-4b93-b415-e0d454d970a5" />
+                                    </ListBox.Items>
+                                </ListBox>
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="93f1a83a-c59b-46db-a20f-ada62eef3f5c">
+                            <Add.Item>
+                                <Note RichText="リストは横に並べた方が使いやすいかも" FontFamily="Noto Sans JP" Id="4556f59f-a959-4baa-9c70-48e57d21b075" Panel.Bounds="511,792,193{5,2147483647},56{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Line Thickness="1" RotationAngle="90" Background="#00FFFFFF" Id="04df390b-26b2-4252-a55a-0c4543f77b30" Panel.Bounds="213,4,3{1,2147483647},775{1,2147483647}">
+                                    <Line.StartPoint>
+                                        <Point X="110" Y="-68" Id="8c698951-5206-42c8-9005-bc08dcb08b9e" />
+                                    </Line.StartPoint>
+                                    <Line.Segments>
+                                        <Segment Id="a6e9faf0-e662-415b-ba96-4417b06fb0de">
+                                            <Segment.EndPoint>
+                                                <Point X="110" Y="707" Id="cf6bf9d8-41fb-494a-a751-4994198248c4" />
+                                            </Segment.EndPoint>
+                                        </Segment>
+                                    </Line.Segments>
+                                </Line>
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Line Thickness="1" Background="#00FFFFFF" Id="6ee6cd47-261a-48d5-832c-9bc2b054378d" Panel.Bounds="2,778,1024,3">
+                                    <Line.StartPoint>
+                                        <Point X="-104" Y="708" Id="57e6a8cc-10a7-4b6a-9dca-1965ad135d66" />
+                                    </Line.StartPoint>
+                                    <Line.Segments>
+                                        <Segment Id="9418b9f7-07bc-4007-9b37-1368038ab299">
+                                            <Segment.EndPoint>
+                                                <Point X="920" Y="708" Id="c88987f9-0b25-4a4c-981f-a265399e6fc3" />
+                                            </Segment.EndPoint>
+                                        </Segment>
+                                    </Line.Segments>
+                                </Line>
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="Title: Playlist1" FontFamily="Noto Sans JP" Id="43399450-8f97-42c9-916d-78864a8e531c" Panel.Bounds="226,108,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <ListBox FontFamily="Noto Sans JP" Id="336575b2-10a3-47d0-a378-f7c843b70faa" Panel.Bounds="20,172,183{5,2147483647},595{5,2147483647}">
+                                    <ListBox.Items>
+                                        <Item Text="Item 1" Id="078b83d1-6eb8-418f-ab22-7ea4eca6aeba" />
+                                        <Item Text="Item 2" Id="402fc970-1d6a-454b-9fb2-19d347a77225" />
+                                    </ListBox.Items>
+                                </ListBox>
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="Search:" FontFamily="Noto Sans JP" Id="82d3fe0f-fd0f-4fd3-a6fd-6d394ad274a8" Panel.Bounds="20,37,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <TextBox FontFamily="Noto Sans JP" Id="9d9c0141-1c80-42ab-895c-093c2ecde905" Panel.Bounds="72,34,131{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="Search Option:" FontFamily="Noto Sans JP" Id="0522b2f5-a83b-4c58-bd9d-cc650e0ed2b1" Panel.Bounds="20,69,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Rectangle Id="1c717891-b95a-45fd-87ce-e337118b6784" Panel.Bounds="20,98,183{5,2147483647},52{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="abstract: ..." FontFamily="Noto Sans JP" Id="fab9685d-6d43-4924-b45b-9a47d12e547b" Panel.Bounds="226,134,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="Title: Playlist1" FontFamily="Noto Sans JP" Id="9597aedc-aa05-48ae-ad19-29a5183d0eb5" Panel.Bounds="627,108,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="abstract: ..." FontFamily="Noto Sans JP" Id="3840c8ce-37d7-47c8-bbf9-cbe48758ff6e" Panel.Bounds="627,134,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Line Thickness="1" Background="#00FFFFFF" Id="59d28d01-a959-4b5f-8c31-eb0ceabcdb2b" Panel.Bounds="2,161,1024,3">
+                                    <Line.StartPoint>
+                                        <Point X="-104" Y="708" Id="13f78903-03de-41e7-8280-33525032a5b2" />
+                                    </Line.StartPoint>
+                                    <Line.Segments>
+                                        <Segment Id="3309b91a-07a8-46cb-aae4-6d292247b9f4">
+                                            <Segment.EndPoint>
+                                                <Point X="920" Y="708" Id="58b2c851-77ea-4b36-98b7-c62cc236aab0" />
+                                            </Segment.EndPoint>
+                                        </Segment>
+                                    </Line.Segments>
+                                </Line>
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Line Thickness="1" Background="#00FFFFFF" Id="cac122cf-fd68-4b46-abd8-600a4c9b2f6a" Panel.Bounds="213,98,820,3">
+                                    <Line.StartPoint>
+                                        <Point X="-104" Y="708" Id="57990cb9-a247-4b33-ac31-a0a854fcc47a" />
+                                    </Line.StartPoint>
+                                    <Line.Segments>
+                                        <Segment Id="94d7fcff-272c-455d-963f-62be964cce4f">
+                                            <Segment.EndPoint>
+                                                <Point X="920" Y="708" Id="b66250ea-586b-4ba6-848a-678963f69477" />
+                                            </Segment.EndPoint>
+                                        </Segment>
+                                    </Line.Segments>
+                                </Line>
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="Movie" FontFamily="Noto Sans JP" Id="03588dc2-4efa-49db-b237-2fe15259f9f9" Panel.Bounds="10,4,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="Playlists" FontFamily="Noto Sans JP" Id="a505a8a1-efc2-47fb-aa66-5693bb583700" Panel.Bounds="219,4,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Rectangle Id="c1fccdc5-6d3c-4afd-8d27-7698d264aa58" Panel.Bounds="294,14,114{5,2147483647},75{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Rectangle Id="560be168-b2c1-4772-b971-a73093a6ee23" Panel.Bounds="294,14,114{5,2147483647},75{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Rectangle Id="fed85671-8208-4f5e-90ed-9d0459c5e301" Panel.Bounds="574,16,114{5,2147483647},75{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Rectangle Id="0f49a805-f14f-42cf-bb80-2bb58de37c4a" Panel.Bounds="434,14,114{5,2147483647},75{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Rectangle Id="ea540e88-512b-467e-9060-5b4c7668d6b2" Panel.Bounds="854,16,114{5,2147483647},75{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Rectangle Id="65e7c46c-c20d-4105-8adb-7dcc7a61a578" Panel.Bounds="714,16,114{5,2147483647},75{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="025e0977-3071-4998-8338-d1b1bcd464ce">
+                            <Add.Item>
+                                <Label RichText="..." FontFamily="Noto Sans JP" Id="8650c715-7c74-4086-b3fb-c4e9b8244a67" Panel.Bounds="994,41,5*{5,2147483647},5*{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                        <Add Property="Panel.Children" Target="93f1a83a-c59b-46db-a20f-ada62eef3f5c">
+                            <Add.Item>
+                                <Note RichText="プレイリストをドラッグドロップして編集対象に" FontFamily="Noto Sans JP" Id="a474367c-5bf1-484f-8deb-82db9694f814" Panel.Bounds="821,101,193{5,2147483647},56{5,2147483647}" />
+                            </Add.Item>
+                        </Add>
+                    </KeyFrame.Operations>
+                </KeyFrame>
+            </Scene.KeyFrames>
+        </Scene>
+    </Page.Scenes>
+</Page>
