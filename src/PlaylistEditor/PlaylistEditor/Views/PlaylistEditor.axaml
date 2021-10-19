@@ -18,7 +18,7 @@
 			<TextBox Margin="5" Width="400"
 					 Watermark="Input Playlist Description" Text="{Binding Path=AddPlaylistDescription.Value}" />
 		</StackPanel>
-		<ListBox DockPanel.Dock="Top" Items="{Binding PlaylistViewModels}" SelectedItem="{Binding SelectedPlaylistViewModel.Value}">
+		<ListBox Name="PlaylistEditorListBox" DockPanel.Dock="Top" Items="{Binding PlaylistViewModels}" SelectedItem="{Binding SelectedPlaylistViewModel.Value}">
 			<ListBox.Styles>
 				<Style Selector="ListBoxItem">
 					<Setter Property="HorizontalContentAlignment" Value="Stretch" />

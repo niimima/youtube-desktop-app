@@ -8,6 +8,7 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\delete.png" />
     <None Remove="ViewModels\PlaylistItemViewModel.cs~RF380a3313.TMP" />
   </ItemGroup>
   <ItemGroup>

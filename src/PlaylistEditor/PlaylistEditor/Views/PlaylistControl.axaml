@@ -3,26 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:PlaylistEditor.ViewModels"
+             xmlns:v="using:PlaylistEditor.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistControl"
 			 Name="PlaylistControl"
 			 DragDrop.AllowDrop="True">
 	<UserControl.DataTemplates>
 		<DataTemplate DataType="{x:Type vm:PlaylistItemViewModel}">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="40" />
-					<RowDefinition Height="80" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="160"/>
-					<ColumnDefinition Width="160" />
-				</Grid.ColumnDefinitions>
-				<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-					   Source="{Binding Image.Value}" />
-				<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
-				<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
-			</Grid>
+			<v:PlaylistItemControl />
 		</DataTemplate>
 	</UserControl.DataTemplates>
 

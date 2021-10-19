@@ -71,6 +71,18 @@ namespace PlaylistEditor.ViewModels
 
 		#endregion
 
+		#region 公開サービス
+
+		/// <summary>
+		/// プレイリストアイテムを削除する
+		/// </summary>
+		public void RemovePlaylistItem()
+		{
+			PlaylistViewModel.RemovePlaylistItem(Id);
+		}
+
+		#endregion
+
 		#region オーバーライド
 
 		public override string ToString()

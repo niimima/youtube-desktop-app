@@ -1,44 +1,31 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using PlaylistEditor.ViewModels;
-using System;
 
 namespace PlaylistEditor.Views
 {
-	/// <summary>
-	/// プレイリストコントロール
-	/// </summary>
-	public partial class PlaylistControl : UserControl
+	public partial class PlaylistItemControl : UserControl
 	{
 		#region フィールド
 
 		/// <summary>
-		/// プレイリストコントロールのリストボックス
+		/// ドラッグドロップ可能なボーダー
 		/// </summary>
-		private ListBox m_PlaylistControlListBox;
+		private Border m_DragDropBorder;
 
 		#endregion
-
-		#region 構築
-
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		public PlaylistControl()
+		public PlaylistItemControl()
 		{
 			InitializeComponent();
 
             SetupDnd();
 
             // TODO ハンドラ登録のやり方が分からず、ネットで調査した内容をそのまま利用している
-            m_PlaylistControlListBox = this.Find<ListBox>("PlaylistControlListBox");
-			m_PlaylistControlListBox.AddHandler(PointerPressedEvent, DoDrag);
+            m_DragDropBorder = this.Find<Border>("DragDropBorder");
+			m_DragDropBorder.AddHandler(PointerPressedEvent, DoDrag);
 		}
-
-		#endregion
 
 		#region 内部処理
 
@@ -61,16 +48,19 @@ namespace PlaylistEditor.Views
             {
                 if (e.Data.Contains("Movie"))
 				{
-					_ = ((PlaylistViewModel)DataContext).AddVideoToPlaylist((string)e.Data.Get("Movie"));
+					_ = ((PlaylistItemViewModel)DataContext).PlaylistViewModel.AddVideoToPlaylist((string)e.Data.Get("Movie"));
 				}
 				else if(e.Data.Contains("PlaylistItem"))
 				{
 					var vm = (PlaylistItemViewModel?)e.Data.Get("PlaylistItem");
 					if (vm is null) return;
 
-					((PlaylistViewModel)DataContext).AddPlaylistItem(vm);
+					((PlaylistItemViewModel)DataContext).PlaylistViewModel.AddPlaylistItem(vm);
 					vm.PlaylistViewModel.RemovePlaylistItem(vm.Id);
 				}
+
+				// ここで処理をした後、バブリングを止める
+				e.Handled = true;
             }
 
             AddHandler(DragDrop.DropEvent, Drop);
@@ -84,17 +74,14 @@ namespace PlaylistEditor.Views
         /// <param name="e"></param>
 		private void DoDrag(object? sender, PointerPressedEventArgs e)
 		{
-            if (m_PlaylistControlListBox.DataContext is not PlaylistViewModel vm) return;
-            if (vm.SelectedItem == null) return;
+            if (m_DragDropBorder.DataContext is not PlaylistItemViewModel vm) return;
+            if (vm == null) return;
 
             var dragData = new DataObject();
-			dragData.Set("PlaylistItem", vm.SelectedItem.Value);
+			dragData.Set("PlaylistItem", vm);
             DragDrop.DoDragDrop(e, dragData, DragDropEffects.Copy);
 		}
 
-		/// <summary>
-		/// コンポーネントの初期化
-		/// </summary>
 		private void InitializeComponent()
 		{
 			AvaloniaXamlLoader.Load(this);
