@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using PlaylistEditor.ViewModels;
 using PlaylistEditor.Views;
+using Splat;
 
 namespace PlaylistEditor
 {
@@ -17,9 +18,10 @@ namespace PlaylistEditor
 		{
 			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 			{
+				DataContext = Locator.Current.GetService<IMainWindowViewModel>();
 				desktop.MainWindow = new MainWindow
 				{
-					DataContext = new MainWindowViewModel(),
+					DataContext = DataContext
 				};
 			}
 
