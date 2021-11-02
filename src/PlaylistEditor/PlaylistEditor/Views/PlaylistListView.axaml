@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PlaylistEditor.Views.PlaylistListView">
+	<StackPanel>
+		<ListBox Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBoxItem Width="200" Height="150">Item1</ListBoxItem>
+			<ListBoxItem Width="200" Height="150">Item2</ListBoxItem>
+			<ListBoxItem Width="200" Height="150">Item3</ListBoxItem>
+			<ListBoxItem Width="200" Height="150">Item4</ListBoxItem>
+			<ListBoxItem Width="200" Height="150">Item5</ListBoxItem>
+			<ListBoxItem Width="200" Height="150">Item6</ListBoxItem>
+			<ListBoxItem Width="200" Height="150">Item7</ListBoxItem>
+		</ListBox>
+	</StackPanel>
+</UserControl>

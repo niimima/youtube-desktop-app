@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:PlaylistEditor.ViewModels"
+        xmlns:v="using:PlaylistEditor.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -13,6 +14,7 @@
     </Design.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
+			<RowDefinition Height="20" />
 			<RowDefinition Height="200" />
 			<RowDefinition Height="80" />
 			<RowDefinition />
@@ -22,58 +24,18 @@
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 
+		<!-- ビデオ -->
+		<TextBlock Grid.Row="0" Grid.Column="0">Movie</TextBlock>
 		<!-- 検索領域 -->
-		<StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="5">
-			<TextBlock>Movie</TextBlock>
-			<StackPanel Margin="5"
-						Orientation="Horizontal">
-				<TextBlock VerticalAlignment="Center" Margin="10">Search : </TextBlock>
-				<TextBox Height="20" Width="215" Watermark="Search Word"/>
-			</StackPanel>
-			<StackPanel Margin="5" >
-				<TextBlock VerticalAlignment="Center" Margin="10">Search Option: </TextBlock>
-				<TextBox Margin="10" Height="100" Width="280" Watermark="Search Option"/>
-			</StackPanel>
-			<Button HorizontalAlignment="Right" Margin="5">Search</Button>
-		</StackPanel>
-
+		<v:SearchFormView  Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Margin="5"/>
 		<!-- 検索結果領域 -->
-		<ListBox Grid.Row="2" Grid.Column="0" Margin="5">
-			<ListBoxItem>Item1</ListBoxItem>
-			<ListBoxItem>Item2</ListBoxItem>
-			<ListBoxItem>Item3</ListBoxItem>
-		</ListBox>
+		<v:SearchResultView Grid.Row="3" Grid.Column="0" Margin="5"/>
 
-		<!-- プレイリスト領域 -->
-		<StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
-			<TextBlock>Playlist</TextBlock>
-			<ListBox Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-				<ListBox.ItemsPanel>
-					<ItemsPanelTemplate>
-						<StackPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ListBox.ItemsPanel>
-				<ListBoxItem Width="200" Height="150">Item1</ListBoxItem>
-				<ListBoxItem Width="200" Height="150">Item2</ListBoxItem>
-				<ListBoxItem Width="200" Height="150">Item3</ListBoxItem>
-				<ListBoxItem Width="200" Height="150">Item4</ListBoxItem>
-				<ListBoxItem Width="200" Height="150">Item5</ListBoxItem>
-				<ListBoxItem Width="200" Height="150">Item6</ListBoxItem>
-				<ListBoxItem Width="200" Height="150">Item7</ListBoxItem>
-			</ListBox>
-		</StackPanel>
-
-		<!-- プレイリスト概要領域 -->
-		<StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
-			<TextBlock Margin="5">Title: Playlist1</TextBlock>
-			<TextBlock Margin="5">Abstract: ...</TextBlock>
-		</StackPanel>
-
+		<!-- プレイリスト -->
+		<TextBlock Grid.Row="0" Grid.Column="1">Playlist</TextBlock>
+		<!-- プレイリスト一覧領域 -->
+		<v:PlaylistListView Grid.Row="1" Grid.Column="1" Margin="5"/>
 		<!-- プレイリストコンテンツ領域 -->
-		<ListBox Grid.Row="2" Grid.Column="1" Margin="5">
-			<ListBoxItem>Item1</ListBoxItem>
-			<ListBoxItem>Item2</ListBoxItem>
-			<ListBoxItem>Item3</ListBoxItem>
-		</ListBox>
+		<v:PlaylistContentView Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="5"/>
 	</Grid>
 </Window>
