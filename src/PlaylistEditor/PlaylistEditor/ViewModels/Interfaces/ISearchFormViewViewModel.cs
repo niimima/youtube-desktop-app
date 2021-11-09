@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PlaylistEditor.ViewModels
 {
+	/// <summary>
+	/// 検索フォームビューのVM
+	/// </summary>
 	interface ISearchFormViewViewModel
 	{
 	}

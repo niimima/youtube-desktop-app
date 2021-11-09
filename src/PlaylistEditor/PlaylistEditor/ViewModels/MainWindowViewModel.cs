@@ -10,25 +10,50 @@ namespace PlaylistEditor.ViewModels
 	/// </summary>
 	internal class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
 	{
-		#region フィールド
-
-		/// <summary>
-		/// YouTubeサービス
-		/// </summary>
-		private IYouTubeService m_YouTubeService;
-
-		#endregion
 
 		#region 構築
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		/// <param name="youtubeService">YouTubeサービス</param>
-		internal MainWindowViewModel(IYouTubeService youtubeService)
+		/// <param name="playlistListViewViewModel"></param>
+		/// <param name="playlistContentViewViewModel"></param>
+		/// <param name="searchResultViewViewModel"></param>
+		/// <param name="searchFormViewViewModel"></param>
+		public MainWindowViewModel(IPlaylistListViewViewModel playlistListViewViewModel,
+			IPlaylistContentViewViewModel playlistContentViewViewModel,
+			ISearchResultViewViewModel searchResultViewViewModel,
+			ISearchFormViewViewModel searchFormViewViewModel)
 		{
-			m_YouTubeService = youtubeService;
+			PlaylistListViewViewModel = playlistListViewViewModel;
+			PlaylistContentViewViewModel = playlistContentViewViewModel;
+			SearchResultViewViewModel = searchResultViewViewModel;
+			SearchFormViewViewModel = searchFormViewViewModel;
 		}
+
+		#endregion
+
+		#region プロパティ
+
+		/// <summary>
+		/// プレイリスト一覧のVM
+		/// </summary>
+		public IPlaylistListViewViewModel PlaylistListViewViewModel { get; }
+
+		/// <summary>
+		/// プレイリストコンテンツのVM
+		/// </summary>
+		public IPlaylistContentViewViewModel PlaylistContentViewViewModel { get; }
+
+		/// <summary>
+		/// 検索結果ビューのVM
+		/// </summary>
+		public ISearchResultViewViewModel SearchResultViewViewModel { get; }
+
+		/// <summary>
+		/// 検索フォームのVM
+		/// </summary>
+		public ISearchFormViewViewModel SearchFormViewViewModel { get; }
 
 		#endregion
 	}

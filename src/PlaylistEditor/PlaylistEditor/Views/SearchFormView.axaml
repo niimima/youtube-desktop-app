@@ -8,12 +8,20 @@
 		<StackPanel Margin="5"
 					Orientation="Horizontal">
 			<TextBlock VerticalAlignment="Center" Margin="10">Search : </TextBlock>
-			<TextBox Height="20" Width="215" Watermark="Search Word"/>
+			<TextBox Name="m_SearchWordTextBox" Height="20" Width="215" Watermark="Search Word">
+				<TextBox.KeyBindings>
+					<KeyBinding Gesture="Enter" Command="{Binding Search}"
+								CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+				</TextBox.KeyBindings>
+			</TextBox>
 		</StackPanel>
 		<StackPanel Margin="5" >
 			<TextBlock VerticalAlignment="Center" Margin="10">Search Option: </TextBlock>
 			<TextBox Margin="10" Height="100" Width="280" Watermark="Search Option"/>
 		</StackPanel>
-		<Button HorizontalAlignment="Right" Margin="5">Search</Button>
+		<Button HorizontalAlignment="Right" Margin="5"
+				Command="{Binding Search}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Text}">
+			Search
+		</Button>
 	</StackPanel>
 </UserControl>

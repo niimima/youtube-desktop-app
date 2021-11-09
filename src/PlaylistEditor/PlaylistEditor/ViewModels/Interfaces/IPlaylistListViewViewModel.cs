@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PlaylistEditor.ViewModels
 {
+	/// <summary>
+	/// プレイリスト一覧のVM
+	/// </summary>
 	interface IPlaylistListViewViewModel
 	{
 	}

@@ -2,6 +2,7 @@
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
+using PlaylistEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,9 +34,7 @@ namespace PlaylistEditor.Services
 
 		#region 公開サービス
 
-		/// <summary>
-		/// 初期化します
-		/// </summary>
+		/// <inheritdoc/>
 		public async void Initialize()
 		{
 			UserCredential credential;
@@ -57,6 +56,26 @@ namespace PlaylistEditor.Services
 				HttpClientInitializer = credential,
 				ApplicationName = Assembly.GetExecutingAssembly().GetName().Name
 			});
+		}
+
+		/// <inheritdoc/>
+		public async Task<IEnumerable<Video>> SearchVideo(string searchWord, int maxResultCount = 50)
+		{
+			// YouTubeサービスに問い合わせ
+			var searchListRequest = m_YouTubeService!.Search.List("snippet");
+			searchListRequest.Q = searchWord;
+			searchListRequest.MaxResults = maxResultCount;
+			var searchListResponse = await searchListRequest.ExecuteAsync();
+
+			// 取得した結果から動画を取得
+			var searchVideos = searchListResponse.Items.Where(item => item.Id.Kind == "youtube#video");
+			var resultVideos = new List<Video>();
+			foreach(var item in searchVideos)
+			{
+				resultVideos.Add(new Video(item.Id.VideoId, item.Snippet.Title, item.Snippet.Description, item.Snippet.Thumbnails.Default__.Url));
+			}
+
+			return resultVideos;
 		}
 
 		#endregion
