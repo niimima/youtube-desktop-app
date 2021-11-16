@@ -36,7 +36,8 @@
 		<!-- プレイリスト -->
 		<TextBlock Grid.Row="0" Grid.Column="1">Playlist</TextBlock>
 		<!-- プレイリスト一覧領域 -->
-		<v:PlaylistListView Grid.Row="1" Grid.Column="1" Margin="5"/>
+		<v:PlaylistListView Grid.Row="1" Grid.Column="1" Margin="5"
+							DataContext="{Binding PlaylistListViewViewModel}"/>
 		<!-- プレイリストコンテンツ領域 -->
 		<v:PlaylistContentView Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="5"/>
 	</Grid>

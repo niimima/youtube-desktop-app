@@ -2,22 +2,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:PlaylistEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistListView">
-	<StackPanel>
-		<ListBox Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-			<ListBox.ItemsPanel>
-				<ItemsPanelTemplate>
-					<StackPanel Orientation="Horizontal" />
-				</ItemsPanelTemplate>
-			</ListBox.ItemsPanel>
-			<ListBoxItem Width="200" Height="150">Item1</ListBoxItem>
-			<ListBoxItem Width="200" Height="150">Item2</ListBoxItem>
-			<ListBoxItem Width="200" Height="150">Item3</ListBoxItem>
-			<ListBoxItem Width="200" Height="150">Item4</ListBoxItem>
-			<ListBoxItem Width="200" Height="150">Item5</ListBoxItem>
-			<ListBoxItem Width="200" Height="150">Item6</ListBoxItem>
-			<ListBoxItem Width="200" Height="150">Item7</ListBoxItem>
-		</ListBox>
-	</StackPanel>
+	<ListBox Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+			 Items="{Binding PlaylistList}" SelectedItem="{Binding SelectedItem.Value}">
+		<ListBox.ItemsPanel>
+			<ItemsPanelTemplate>
+				<StackPanel Orientation="Horizontal" />
+			</ItemsPanelTemplate>
+		</ListBox.ItemsPanel>
+		<ListBox.DataTemplates>
+			<DataTemplate DataType="{x:Type vm:PlaylistListViewItemViewModel}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="40" />
+						<RowDefinition Height="110" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200"/>
+						<ColumnDefinition Width="150" />
+					</Grid.ColumnDefinitions>
+					<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="5"
+						   Source="{Binding Image.Value}" 
+						   HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
+					<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
+				</Grid>
+			</DataTemplate>
+		</ListBox.DataTemplates>
+	</ListBox>
 </UserControl>

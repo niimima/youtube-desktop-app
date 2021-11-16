@@ -78,6 +78,22 @@ namespace PlaylistEditor.Services
 			return resultVideos;
 		}
 
+		/// <inheritdoc/>
+		public async Task<IEnumerable<Playlist>> GetMyPlaylists()
+		{
+			var newPlaylist = m_YouTubeService!.Playlists.List("snippet");
+			// チャンネルIDを指定することでも取得可能
+			// newPlaylist.ChannelId = "UCpkkP5J-16g3zgfuIihCTrA";
+			newPlaylist.Mine = true;
+			var list = await newPlaylist.ExecuteAsync();
+			var resultPlaylists = new List<Playlist>();
+			foreach (var playlist in list.Items)
+			{
+				resultPlaylists.Add(new Playlist(playlist.Id, playlist.Snippet.Title, playlist.Snippet.Description, playlist.Snippet.Thumbnails.Default__.Url));
+			}
+			return resultPlaylists;
+		}
+
 		#endregion
 	}
 }
