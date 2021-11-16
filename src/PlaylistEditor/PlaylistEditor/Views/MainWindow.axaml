@@ -30,7 +30,8 @@
 		<v:SearchFormView  Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Margin="5"
 						   DataContext="{Binding SearchFormViewViewModel}"/>
 		<!-- 検索結果領域 -->
-		<v:SearchResultView Grid.Row="3" Grid.Column="0" Margin="5"/>
+		<v:SearchResultView Grid.Row="3" Grid.Column="0" Margin="5"
+							DataContext="{Binding SearchResultViewViewModel}"/>
 
 		<!-- プレイリスト -->
 		<TextBlock Grid.Row="0" Grid.Column="1">Playlist</TextBlock>

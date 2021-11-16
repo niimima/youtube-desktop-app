@@ -17,5 +17,6 @@
     <PackageReference Include="Google.Apis" Version="1.55.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.55.0.2449" />
+    <PackageReference Include="ReactiveProperty" Version="8.0.0" />
   </ItemGroup>
 </Project>

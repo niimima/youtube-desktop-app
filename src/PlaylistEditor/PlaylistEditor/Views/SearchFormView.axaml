@@ -8,19 +8,19 @@
 		<StackPanel Margin="5"
 					Orientation="Horizontal">
 			<TextBlock VerticalAlignment="Center" Margin="10">Search : </TextBlock>
-			<TextBox Name="m_SearchWordTextBox" Height="20" Width="215" Watermark="Search Word">
+			<TextBox Name="m_SearchWordTextBox" Height="20" Width="215" Watermark="Search Word"
+					 Text="{Binding Path=SearchWord.Value}">
 				<TextBox.KeyBindings>
-					<KeyBinding Gesture="Enter" Command="{Binding Search}"
-								CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+					<KeyBinding Gesture="Enter" Command="{Binding Search}"/>
 				</TextBox.KeyBindings>
 			</TextBox>
 		</StackPanel>
 		<StackPanel Margin="5" >
 			<TextBlock VerticalAlignment="Center" Margin="10">Search Option: </TextBlock>
-			<TextBox Margin="10" Height="100" Width="280" Watermark="Search Option"/>
+			<TextBox Margin="10" Height="100" Width="280" Watermark="Search Option"
+					 IsEnabled="False"/>
 		</StackPanel>
-		<Button HorizontalAlignment="Right" Margin="5"
-				Command="{Binding Search}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Text}">
+		<Button HorizontalAlignment="Right" Margin="5" Command="{Binding Search}">
 			Search
 		</Button>
 	</StackPanel>

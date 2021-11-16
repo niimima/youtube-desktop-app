@@ -1,10 +1,7 @@
-﻿using PlaylistEditor.Models;
-using PlaylistEditor.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PlaylistEditor.Services;
+using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
+using System.Reactive.Disposables;
 
 namespace PlaylistEditor.ViewModels
 {
@@ -26,6 +23,11 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		private ISearchResultViewViewModel m_SearchResultViewViewModel;
 
+		/// <summary>
+		/// Disposeのタイミングに合わせてDisposeするリソースを登録する
+		/// </summary>
+		private readonly CompositeDisposable m_Disposables = new CompositeDisposable();
+
 		#endregion
 
 		#region 構築
@@ -39,7 +41,17 @@ namespace PlaylistEditor.ViewModels
 		{
 			m_YouTubeService = youtubeService;
 			m_SearchResultViewViewModel = searchResultViewViewModel;
+			SearchWord = new ReactivePropertySlim<string>().AddTo(m_Disposables);
 		}
+
+		#endregion
+
+		#region プロパティ
+
+		/// <summary>
+		/// 検索ワード
+		/// </summary>
+		public ReactivePropertySlim<string> SearchWord { get; set; }
 
 		#endregion
 
@@ -48,9 +60,9 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// 動画を検索する
 		/// </summary>
-		public async void Search(string searchWord)
+		public async void Search()
 		{
-			var result = await m_YouTubeService.SearchVideo(searchWord);
+			var result = await m_YouTubeService.SearchVideo(SearchWord.Value);
 			m_SearchResultViewViewModel.Update(result);
 		}
 
