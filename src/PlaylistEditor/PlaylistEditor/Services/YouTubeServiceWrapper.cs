@@ -94,6 +94,24 @@ namespace PlaylistEditor.Services
 			return resultPlaylists;
 		}
 
+		/// <inheritdoc/>
+		public async Task<IEnumerable<PlaylistItem>> GetPlaylistItems(string id)
+		{
+			var playlistItems = m_YouTubeService!.PlaylistItems.List("snippet");
+			// 100件まで編集可能とする
+			playlistItems.MaxResults = 100;
+			playlistItems.PlaylistId = id;
+
+			var items = await playlistItems.ExecuteAsync();
+			var resultPlaylistItems = new List<PlaylistItem>();
+			foreach (var playlistItem in items.Items)
+			{
+				resultPlaylistItems.Add(new PlaylistItem(playlistItem.Id, playlistItem.Snippet.Title, playlistItem.Snippet.Description, playlistItem.Snippet.Thumbnails.Default__.Url));
+			}
+
+			return resultPlaylistItems;
+		}
+
 		#endregion
 	}
 }

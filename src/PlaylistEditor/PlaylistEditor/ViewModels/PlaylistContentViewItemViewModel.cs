@@ -1,16 +1,20 @@
 ﻿using PlaylistEditor.Models;
 using PlaylistEditor.Services;
-using PlaylistEditor.ViewModels.Interfaces;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PlaylistEditor.ViewModels
 {
 	/// <summary>
-	/// プレイリスト一覧の要素VM
+	/// プレイリストコンテンツの子要素VM
 	/// </summary>
-	class PlaylistListViewItemViewModel : IPlaylistListViewItemViewModel
+	class PlaylistContentViewItemViewModel
 	{
 		#region フィールド
 
@@ -19,10 +23,11 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		private readonly CompositeDisposable m_Disposables = new CompositeDisposable();
 
+
 		/// <summary>
-		/// プレイリスト
+		/// プレイリストアイテム
 		/// </summary>
-		private Playlist m_Playlist;
+		private PlaylistItem m_PlaylistItem;
 
 		/// <summary>
 		/// Webクライエントサービス
@@ -36,15 +41,15 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		/// <param name="playlist">プレイリスト</param>
+		/// <param name="item">プレイリストアイテム</param>
 		/// <param name="webClientService">Webクライエントサービス</param>
-		public PlaylistListViewItemViewModel(Playlist playlist, IWebClientService webClientService)
+		public PlaylistContentViewItemViewModel(PlaylistItem item, IWebClientService webClientService)
 		{
 			Image = new ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap>().AddTo(m_Disposables);
 
-			m_Playlist = playlist;
+			m_PlaylistItem = item;
 			m_WebClientService = webClientService;
-			m_WebClientService.DownloadImage(playlist.ThumbnailUrl, Image);
+			m_WebClientService.DownloadImage(item.ThumbnailUrl, Image);
 		}
 
 		#endregion
@@ -54,17 +59,17 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// ID
 		/// </summary>
-		public string Id => m_Playlist.PlaylistId;
+		public string Id => m_PlaylistItem.Id;
 
 		/// <summary>
 		/// タイトル
 		/// </summary>
-		public string Title => m_Playlist.Title;
+		public string Title => m_PlaylistItem.Title;
 
 		/// <summary>
 		/// 概要
 		/// </summary>
-		public string Description => m_Playlist.Description;
+		public string Description => m_PlaylistItem.Description;
 
 		/// <summary>
 		/// サムネイル画像

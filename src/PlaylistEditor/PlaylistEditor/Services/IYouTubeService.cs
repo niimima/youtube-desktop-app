@@ -30,5 +30,12 @@ namespace PlaylistEditor.Services
 		/// </summary>
 		/// <returns>自身のプレイリスト一覧</returns>
 		Task<IEnumerable<Playlist>> GetMyPlaylists();
+
+		/// <summary>
+		/// プレイリストの子要素一覧を取得します
+		/// </summary>
+		/// <param name="id">ID</param>
+		/// <returns>プレイリストの子要素一覧</returns>
+		Task<IEnumerable<PlaylistItem>> GetPlaylistItems(string id);
 	}
 }

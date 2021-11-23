@@ -1,4 +1,6 @@
-﻿using PlaylistEditor.Services;
+﻿using PlaylistEditor.Models;
+using PlaylistEditor.Services;
+using PlaylistEditor.ViewModels.Interfaces;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
@@ -13,7 +15,7 @@ namespace PlaylistEditor.ViewModels
 	/// <summary>
 	/// プレイリスト一覧のVM
 	/// </summary>
-	class PlaylistListViewViewModel : IPlaylistListViewViewModel
+	class PlaylistListViewViewModel : ViewModelBase, IPlaylistListViewViewModel
 	{
 		#region フィールド
 
@@ -40,10 +42,14 @@ namespace PlaylistEditor.ViewModels
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="youTubeService">YouTubeサービス</param>
+		/// <param name="webClientService">Webクライエントサービス</param>
 		public PlaylistListViewViewModel(IYouTubeService youTubeService, IWebClientService webClientService)
 		{
 			PlaylistList = new ReactiveCollection<PlaylistListViewItemViewModel>().AddTo(m_Disposables);
 			SelectedItem = new ReactivePropertySlim<PlaylistListViewItemViewModel>().AddTo(m_Disposables);
+			// 選択アイテムが変更されたら選択変更イベントも通知する
+			SelectedItem.Subscribe(_ => RaiseSelectionChanged());
+
 			m_YouTubeService = youTubeService;
 			m_WebClientService = webClientService;
 		}
@@ -64,6 +70,15 @@ namespace PlaylistEditor.ViewModels
 
 		#endregion
 
+		#region イベント
+
+		/// <summary>
+		/// 選択変更イベント
+		/// </summary>
+		public event Action<IPlaylistListViewItemViewModel>? SelectionChanged;
+
+		#endregion
+
 		#region 公開サービス
 
 		/// <summary>
@@ -76,6 +91,18 @@ namespace PlaylistEditor.ViewModels
 			{
 				PlaylistList.Add(new PlaylistListViewItemViewModel(playlist, m_WebClientService));
 			}
+		}
+
+		#endregion
+
+		#region 内部処理
+
+		/// <summary>
+		/// 選択変更があったことを通知する
+		/// </summary>
+		private void RaiseSelectionChanged()
+		{
+			SelectionChanged?.Invoke(SelectedItem.Value);
 		}
 
 		#endregion

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PlaylistEditor.Models;
+using PlaylistEditor.ViewModels.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +13,9 @@ namespace PlaylistEditor.ViewModels
 	/// </summary>
 	interface IPlaylistListViewViewModel
 	{
+		/// <summary>
+		/// 選択変更イベント
+		/// </summary>
+		event Action<IPlaylistListViewItemViewModel>? SelectionChanged;
 	}
 }

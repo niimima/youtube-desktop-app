@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:PlaylistEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistContentView">
 	<Grid>
@@ -12,15 +13,32 @@
 
 		<!-- プレイリスト概要領域 -->
 		<StackPanel Grid.Row="0">
-			<TextBlock Margin="5">Title: Playlist1</TextBlock>
-			<TextBlock Margin="5">Abstract: ...</TextBlock>
+			<TextBlock Margin="5" Text="{Binding Title.Value}" />
+			<TextBlock Margin="5" Text="{Binding Description.Value}" />
 		</StackPanel>
 
 		<!-- プレイリストコンテンツ領域 -->
-		<ListBox Grid.Row="1">
-			<ListBoxItem>Item1</ListBoxItem>
-			<ListBoxItem>Item2</ListBoxItem>
-			<ListBoxItem>Item3</ListBoxItem>
+		<ListBox Grid.Row="1"
+				 Items="{Binding PlaylistItemList}">
+			<ListBox.DataTemplates>
+				<DataTemplate DataType="{x:Type vm:PlaylistContentViewItemViewModel}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40" />
+							<RowDefinition Height="110" />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="200"/>
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="5"
+							   Source="{Binding Image.Value}"
+							   HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.DataTemplates>
 		</ListBox>
 	</Grid>
 </UserControl>
