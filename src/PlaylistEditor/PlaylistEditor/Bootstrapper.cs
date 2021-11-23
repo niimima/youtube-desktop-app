@@ -23,13 +23,12 @@ namespace PlaylistEditor
         public static void Register(IMutableDependencyResolver services, IReadonlyDependencyResolver resolver)
         {
             // サービス登録
-            services.RegisterLazySingleton<IYouTubeService>(() => {
-                var service = new YouTubeServiceWrapper();
-                service.Initialize();
-                return service;
-            });
-            services.RegisterLazySingleton<IWebClientService>(() => new WebClientService());
+            // youtubeサービスはAuthentication Tokenの発行処理が入り、ブラウザとのやり取りが必要となるため遅延せずに初めに必ず行う
+            var youtubeService = new YouTubeServiceWrapper();
+            youtubeService.Initialize();
+            services.RegisterConstant<IYouTubeService>(youtubeService);
 
+            services.RegisterLazySingleton<IWebClientService>(() => new WebClientService());
             // VM登録
             services.RegisterLazySingleton<IPlaylistListViewViewModel>(() => {
                 var vm = new PlaylistListViewViewModel(resolver.GetService<IYouTubeService>(), resolver.GetService<IWebClientService>());
