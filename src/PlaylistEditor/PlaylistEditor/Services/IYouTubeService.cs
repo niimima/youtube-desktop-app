@@ -15,7 +15,7 @@ namespace PlaylistEditor.Services
 		/// <summary>
 		/// 初期化します
 		/// </summary>
-		void Initialize();
+		Task Initialize();
 
 		/// <summary>
 		/// 動画を検索します

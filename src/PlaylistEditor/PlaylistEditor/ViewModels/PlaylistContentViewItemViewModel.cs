@@ -49,7 +49,10 @@ namespace PlaylistEditor.ViewModels
 
 			m_PlaylistItem = item;
 			m_WebClientService = webClientService;
-			m_WebClientService.DownloadImage(item.ThumbnailUrl, Image);
+			if (string.IsNullOrEmpty(item.ThumbnailUrl) == false)
+			{
+				m_WebClientService.DownloadImage(item.ThumbnailUrl, Image);
+			}
 		}
 
 		#endregion

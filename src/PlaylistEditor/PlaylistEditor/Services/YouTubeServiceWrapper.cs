@@ -35,7 +35,7 @@ namespace PlaylistEditor.Services
 		#region 公開サービス
 
 		/// <inheritdoc/>
-		public async void Initialize()
+		public async Task Initialize()
 		{
 			UserCredential credential;
 			using (var stream = new FileStream("local.settings.json", FileMode.Open, FileAccess.Read))
@@ -106,7 +106,14 @@ namespace PlaylistEditor.Services
 			var resultPlaylistItems = new List<PlaylistItem>();
 			foreach (var playlistItem in items.Items)
 			{
-				resultPlaylistItems.Add(new PlaylistItem(playlistItem.Id, playlistItem.Snippet.Title, playlistItem.Snippet.Description, playlistItem.Snippet.Thumbnails.Default__.Url));
+				if (playlistItem.Snippet.Thumbnails.Default__ == null)
+				{
+					resultPlaylistItems.Add(new PlaylistItem(playlistItem.Id, playlistItem.Snippet.Title, playlistItem.Snippet.Description, string.Empty));
+				}
+				else
+				{
+					resultPlaylistItems.Add(new PlaylistItem(playlistItem.Id, playlistItem.Snippet.Title, playlistItem.Snippet.Description, playlistItem.Snippet.Thumbnails.Default__.Url));
+				}
 			}
 
 			return resultPlaylistItems;

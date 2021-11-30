@@ -20,12 +20,12 @@ namespace PlaylistEditor
         /// 以下を参照して作成。
         /// https://dev.to/ingvarx/avaloniaui-dependency-injection-4aka
         /// </remarks>
-        public static void Register(IMutableDependencyResolver services, IReadonlyDependencyResolver resolver)
+        public static async Task RegisterAsync(IMutableDependencyResolver services, IReadonlyDependencyResolver resolver)
         {
             // サービス登録
             // youtubeサービスはAuthentication Tokenの発行処理が入り、ブラウザとのやり取りが必要となるため遅延せずに初めに必ず行う
             var youtubeService = new YouTubeServiceWrapper();
-            youtubeService.Initialize();
+            await youtubeService.Initialize();
             services.RegisterConstant<IYouTubeService>(youtubeService);
 
             services.RegisterLazySingleton<IWebClientService>(() => new WebClientService());

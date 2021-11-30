@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
 using System;
 using Splat;
+using System.Threading.Tasks;
 
 namespace PlaylistEditor
 {
@@ -14,7 +15,7 @@ namespace PlaylistEditor
 		[STAThread]
 		public static void Main(string[] args)
 		{
-			RegisterDependencies();
+			_ = RegisterDependenciesAsync();
 			BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 		}
 
@@ -25,6 +26,9 @@ namespace PlaylistEditor
 				.LogToTrace()
 				.UseReactiveUI();
 
-		private static void RegisterDependencies() => Bootstrapper.Register(Locator.CurrentMutable, Locator.Current);
+		private static async Task RegisterDependenciesAsync()
+		{
+			await Bootstrapper.RegisterAsync(Locator.CurrentMutable, Locator.Current);
+		}
 	}
 }
