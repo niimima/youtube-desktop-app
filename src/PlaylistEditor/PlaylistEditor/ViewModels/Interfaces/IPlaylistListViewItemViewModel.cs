@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlaylistEditor.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,11 @@ namespace PlaylistEditor.ViewModels.Interfaces
 	/// </summary>
 	interface IPlaylistListViewItemViewModel
 	{
+		/// <summary>
+		/// プレイリスト
+		/// </summary>
+		Playlist Playlist { get; }
+
 		/// <summary>
 		/// ID
 		/// </summary>

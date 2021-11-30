@@ -55,6 +55,11 @@ namespace PlaylistEditor.ViewModels
 		#region プロパティ
 
 		/// <summary>
+		/// プレイリスト
+		/// </summary>
+		public Playlist Playlist => m_Playlist;
+
+		/// <summary>
 		/// ID
 		/// </summary>
 		public string Id => m_Playlist.PlaylistId;

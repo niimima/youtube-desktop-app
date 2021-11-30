@@ -3,6 +3,7 @@ using PlaylistEditor.Services;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 
 namespace PlaylistEditor.ViewModels
@@ -47,10 +48,16 @@ namespace PlaylistEditor.ViewModels
 		/// 検索結果一覧
 		/// </summary>
 		public ReactiveCollection<SearchResultViewItemViewModel> SearchResultList { get; }
+
 		/// <summary>
 		/// 検索結果一覧で選択されたアイテム
 		/// </summary>
 		public ReactivePropertySlim<SearchResultViewItemViewModel> SelectedItem { get; set; }
+
+		/// <summary>
+		/// 検索結果一覧で選択されたアイテム一覧
+		/// </summary>
+		public IEnumerable<Video> CheckedItems => SearchResultList.Where(item => item.IsChecked.Value).Select(item => item.Video);
 
 		#endregion
 

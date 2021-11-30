@@ -1,4 +1,6 @@
-﻿using PlaylistEditor.Services;
+﻿using PlaylistEditor.Models;
+using PlaylistEditor.Services;
+using PlaylistEditor.ViewModels.Interfaces;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
@@ -28,6 +30,11 @@ namespace PlaylistEditor.ViewModels
 		private IWebClientService m_WebClientService;
 
 		/// <summary>
+		/// 検索結果ビューのVM
+		/// </summary>
+		private ISearchResultViewViewModel m_SearchResultViewViewModel;
+
+		/// <summary>
 		/// Disposeのタイミングに合わせてDisposeするリソースを登録する
 		/// </summary>
 		private readonly CompositeDisposable m_Disposables = new CompositeDisposable();
@@ -42,10 +49,12 @@ namespace PlaylistEditor.ViewModels
 		internal PlaylistContentViewViewModel(
 			IYouTubeService youTubeService,
 			IWebClientService webClientService,
-			IPlaylistListViewViewModel playlistListViewViewModel)
+			IPlaylistListViewViewModel playlistListViewViewModel,
+			ISearchResultViewViewModel searchResultViewViewModel)
 		{
 			m_YouTubeService = youTubeService;
 			m_WebClientService = webClientService;
+			m_SearchResultViewViewModel = searchResultViewViewModel;
 			playlistListViewViewModel.SelectionChanged += PlaylistListViewViewModel_SelectionChanged;
 
 			Title = new ReactivePropertySlim<string>().AddTo(m_Disposables);
@@ -72,6 +81,10 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		public ReactiveCollection<PlaylistContentViewItemViewModel> PlaylistItemList { get; }
 
+		/// <summary>
+		/// プレイリスト
+		/// </summary>
+		private Playlist Playlist { get; set; }
 
 		#endregion
 
@@ -83,15 +96,40 @@ namespace PlaylistEditor.ViewModels
 		/// <param name="itemViewModel"></param>
 		private async void PlaylistListViewViewModel_SelectionChanged(Interfaces.IPlaylistListViewItemViewModel itemViewModel)
 		{
-			Title.Value = itemViewModel.Title;
-			Description.Value = itemViewModel.Description;
+			await UpdatePlaylistItemList(itemViewModel.Playlist);
+		}
+
+		/// <summary>
+		/// プレイリストアイテムの一覧を更新する
+		/// </summary>
+		/// <param name="itemViewModel"></param>
+		/// <returns></returns>
+		private async Task UpdatePlaylistItemList(Playlist playlist)
+		{
+			Playlist = playlist;
+			Title.Value = playlist.Title;
+			Description.Value = playlist.Description;
 
 			PlaylistItemList.Clear();
-			var playlistItems = await m_YouTubeService.GetPlaylistItems(itemViewModel.Id);
+			var playlistItems = await m_YouTubeService.GetPlaylistItems(playlist.PlaylistId);
 			foreach (var item in playlistItems)
 			{
 				PlaylistItemList.Add(new PlaylistContentViewItemViewModel(item, m_WebClientService));
 			}
+		}
+
+		#endregion
+
+		#region 公開サービス
+
+		/// <summary>
+		/// プレイリストアイテムを追加する
+		/// </summary>
+		public async Task AddVideosToPlaylistItemAsync()
+		{
+			var videos = m_SearchResultViewViewModel.CheckedItems;
+			await m_YouTubeService.AddVideosToPlaylistItem(videos, Playlist);
+			await UpdatePlaylistItemList(Playlist);
 		}
 
 		#endregion

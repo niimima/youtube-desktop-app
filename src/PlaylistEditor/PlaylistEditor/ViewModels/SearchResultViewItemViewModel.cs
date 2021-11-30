@@ -55,6 +55,11 @@ namespace PlaylistEditor.ViewModels
 		#region プロパティ
 
 		/// <summary>
+		/// 動画
+		/// </summary>
+		public Video Video => m_Video;
+
+		/// <summary>
 		/// ID
 		/// </summary>
 		public string Id => m_Video.VideoId;

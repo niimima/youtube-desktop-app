@@ -12,10 +12,22 @@
 		</Grid.RowDefinitions>
 
 		<!-- プレイリスト概要領域 -->
-		<StackPanel Grid.Row="0">
-			<TextBlock Margin="5" Text="{Binding Title.Value}" />
-			<TextBlock Margin="5" Text="{Binding Description.Value}" />
-		</StackPanel>
+		<Grid  Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+
+				<TextBlock Margin="5" Text="{Binding Title.Value}" />
+				<TextBlock Margin="5" Text="{Binding Description.Value}" />
+			</StackPanel>
+			<StackPanel Grid.Column="1">
+				<Button Margin="5" Command="{Binding AddVideosToPlaylistItemAsync}">
+					Add
+				</Button>
+			</StackPanel>
+		</Grid>
 
 		<!-- プレイリストコンテンツ領域 -->
 		<ListBox Grid.Row="1"
