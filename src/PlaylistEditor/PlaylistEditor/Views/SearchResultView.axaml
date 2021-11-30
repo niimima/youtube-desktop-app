@@ -14,13 +14,17 @@
 						<RowDefinition Height="80" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30"/>
 						<ColumnDefinition Width="160"/>
-						<ColumnDefinition Width="160" />
+						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+					<CheckBox Grid.Row="0" Grid.RowSpan="2"
+							  VerticalAlignment="Center"
+							  IsChecked="{Binding IsChecked.Value}"/>
+					<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
 						   Source="{Binding Image.Value}" />
-					<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
-					<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
+					<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
+					<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Description}" TextWrapping="Wrap" />
 				</Grid>
 			</DataTemplate>
 		</ListBox.DataTemplates>

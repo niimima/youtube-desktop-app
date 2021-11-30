@@ -40,6 +40,7 @@ namespace PlaylistEditor.ViewModels
 		public SearchResultViewItemViewModel(Video video, IWebClientService webClientService)
 		{
 			Image = new ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap>().AddTo(m_Disposables);
+			IsChecked = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
 
 			m_Video = video;
 			m_WebClientService = webClientService;
@@ -72,6 +73,11 @@ namespace PlaylistEditor.ViewModels
 		/// サムネイル画像
 		/// </summary>
 		public ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap> Image { get; }
+
+		/// <summary>
+		/// チェック状態か
+		/// </summary>
+		public ReactivePropertySlim<bool> IsChecked { get; }
 
 		#endregion
 	}
