@@ -132,6 +132,17 @@ namespace PlaylistEditor.ViewModels
 			await UpdatePlaylistItemList(Playlist);
 		}
 
+		/// <summary>
+		/// プレイリストアイテムを削除する
+		/// </summary>
+		/// <returns></returns>
+		public async Task RemovePlaylistItemAsync()
+		{
+			var selectedItemIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.Id);
+			await m_YouTubeService.RemovePlaylistItems(selectedItemIds);
+			await UpdatePlaylistItemList(Playlist);
+		}
+
 		#endregion
 	}
 }

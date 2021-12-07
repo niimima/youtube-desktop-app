@@ -24,7 +24,10 @@
 			</StackPanel>
 			<StackPanel Grid.Column="1">
 				<Button Margin="5" Command="{Binding AddVideosToPlaylistItemAsync}">
-					Add
+					Add Video To Playlist
+				</Button>
+				<Button Margin="5" Command="{Binding RemovePlaylistItemAsync}">
+					Remove
 				</Button>
 			</StackPanel>
 		</Grid>

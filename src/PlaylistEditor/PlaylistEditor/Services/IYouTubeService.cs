@@ -45,5 +45,12 @@ namespace PlaylistEditor.Services
 		/// <param name="playlistItem">追加対象のプレイリストアイテム</param>
 		/// <returns></returns>
 		Task AddVideosToPlaylistItem(IEnumerable<Video> videos, Playlist playlistItem);
+
+		/// <summary>
+		/// プレイリストアイテムを削除します
+		/// </summary>
+		/// <param name="ids">削除したいプレイリストアイテムのID一覧</param>
+		/// <returns></returns>
+		Task RemovePlaylistItems(IEnumerable<string> ids);
 	}
 }

@@ -138,6 +138,15 @@ namespace PlaylistEditor.Services
 			}
 		}
 
+		/// <inheritdoc/>
+		public async Task RemovePlaylistItems(IEnumerable<string> ids)
+		{
+			foreach (var id in ids)
+			{
+				await m_YouTubeService!.PlaylistItems.Delete(id).ExecuteAsync();
+			}
+		}
+
 		#endregion
 	}
 }
