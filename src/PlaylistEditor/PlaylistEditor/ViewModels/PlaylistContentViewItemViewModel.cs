@@ -66,6 +66,11 @@ namespace PlaylistEditor.ViewModels
 		public string Id => m_PlaylistItem.Id;
 
 		/// <summary>
+		/// リソースID
+		/// </summary>
+		public Google.Apis.YouTube.v3.Data.ResourceId ResourcesId => m_PlaylistItem.ResourcesId;
+
+		/// <summary>
 		/// タイトル
 		/// </summary>
 		public string Title => m_PlaylistItem.Title;

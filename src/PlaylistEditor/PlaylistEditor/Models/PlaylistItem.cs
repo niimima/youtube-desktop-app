@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Apis.YouTube.v3.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,12 +18,14 @@ namespace PlaylistEditor.Models
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="id">ID</param>
+		/// <param name="resourcesId">リソースID</param>
 		/// <param name="title">タイトル</param>
 		/// <param name="description">概要</param>
 		/// <param name="thumbnailUrl">サムネイルのURL</param>
-		public PlaylistItem(string id, string title, string description, string thumbnailUrl)
+		public PlaylistItem(string id, ResourceId resourcesId, string title, string description, string thumbnailUrl)
 		{
 			Id = id;
+			ResourcesId = resourcesId;
 			Title = title;
 			Description = description;
 			ThumbnailUrl = thumbnailUrl;
@@ -36,6 +39,11 @@ namespace PlaylistEditor.Models
 		/// ID
 		/// </summary>
 		public string Id { get; }
+
+		/// <summary>
+		/// リソースID
+		/// </summary>
+		public ResourceId ResourcesId { get; }
 
 		/// <summary>
 		/// タイトル

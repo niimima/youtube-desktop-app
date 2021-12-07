@@ -109,11 +109,11 @@ namespace PlaylistEditor.Services
 			{
 				if (playlistItem.Snippet.Thumbnails.Default__ == null)
 				{
-					resultPlaylistItems.Add(new Models.PlaylistItem(playlistItem.Id, playlistItem.Snippet.Title, playlistItem.Snippet.Description, string.Empty));
+					resultPlaylistItems.Add(new Models.PlaylistItem(playlistItem.Id, playlistItem.Snippet.ResourceId, playlistItem.Snippet.Title, playlistItem.Snippet.Description, string.Empty));
 				}
 				else
 				{
-					resultPlaylistItems.Add(new Models.PlaylistItem(playlistItem.Id, playlistItem.Snippet.Title, playlistItem.Snippet.Description, playlistItem.Snippet.Thumbnails.Default__.Url));
+					resultPlaylistItems.Add(new Models.PlaylistItem(playlistItem.Id, playlistItem.Snippet.ResourceId, playlistItem.Snippet.Title, playlistItem.Snippet.Description, playlistItem.Snippet.Thumbnails.Default__.Url));
 				}
 			}
 
@@ -147,6 +147,31 @@ namespace PlaylistEditor.Services
 			}
 		}
 
+
+		/// <inheritdoc/>
+		public async Task MovePlaylistItems(IEnumerable<string> ids, IEnumerable<ResourceId> resourcesIds, string playlistId)
+		{
+			foreach (var id in resourcesIds)
+			{
+				AddPlaylistItems(id, playlistId);
+			}
+			foreach (var id in ids)
+			{
+				await m_YouTubeService!.PlaylistItems.Delete(id).ExecuteAsync();
+			}
+		}
+
 		#endregion
+
+		private async void AddPlaylistItems(ResourceId resourceId, string playlistId)
+		{
+			// 以下を参考にプレイリストに指定の動画を追加
+			// https://github.com/youtube/api-samples/blob/master/dotnet/Google.Apis.YouTube.Samples.Playlists/PlaylistUpdates.cs#L94
+			var playlistItem = new Google.Apis.YouTube.v3.Data.PlaylistItem();
+			playlistItem.Snippet = new PlaylistItemSnippet();
+			playlistItem.Snippet.PlaylistId = playlistId;
+			playlistItem.Snippet.ResourceId = resourceId;
+			await m_YouTubeService!.PlaylistItems.Insert(playlistItem, "snippet").ExecuteAsync();
+		}
 	}
 }

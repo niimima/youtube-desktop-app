@@ -16,18 +16,31 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
 				<ColumnDefinition />
+				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 			<StackPanel Grid.Column="0">
 
 				<TextBlock Margin="5" Text="{Binding Title.Value}" />
 				<TextBlock Margin="5" Text="{Binding Description.Value}" />
 			</StackPanel>
-			<StackPanel Grid.Column="1">
+			<StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
 				<Button Margin="5" Command="{Binding AddVideosToPlaylistItemAsync}">
 					Add Video To Playlist
 				</Button>
 				<Button Margin="5" Command="{Binding RemovePlaylistItemAsync}">
 					Remove
+				</Button>
+			</StackPanel>
+			<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top">
+				<ComboBox Name="PlaylistListComboBox" Margin="5" Width="200" Items="{Binding PlaylistList}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Title}" />
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+				<Button Margin="5"  Command="{Binding MovePlaylistItemAsync}" CommandParameter="{Binding SelectedItem, ElementName=PlaylistListComboBox}">
+					Move To
 				</Button>
 			</StackPanel>
 		</Grid>

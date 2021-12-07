@@ -52,5 +52,13 @@ namespace PlaylistEditor.Services
 		/// <param name="ids">削除したいプレイリストアイテムのID一覧</param>
 		/// <returns></returns>
 		Task RemovePlaylistItems(IEnumerable<string> ids);
+
+		/// <summary>
+		/// プレイリストアイテムを移動します
+		/// </summary>
+		/// <param name="ids">移動したいプレイリストアイテムのID一覧</param>
+		/// <param name="playlistId">移動先のプレイリストID</param>
+		/// <returns></returns>
+		Task MovePlaylistItems(IEnumerable<string> ids, IEnumerable<Google.Apis.YouTube.v3.Data.ResourceId> resourceIds, string playlistId);
 	}
 }

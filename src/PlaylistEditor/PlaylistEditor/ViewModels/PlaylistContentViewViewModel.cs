@@ -35,6 +35,11 @@ namespace PlaylistEditor.ViewModels
 		private ISearchResultViewViewModel m_SearchResultViewViewModel;
 
 		/// <summary>
+		/// プレイリスト一覧のVM
+		/// </summary>
+		private IPlaylistListViewViewModel m_PlaylistListViewViewModel;
+
+		/// <summary>
 		/// Disposeのタイミングに合わせてDisposeするリソースを登録する
 		/// </summary>
 		private readonly CompositeDisposable m_Disposables = new CompositeDisposable();
@@ -55,6 +60,7 @@ namespace PlaylistEditor.ViewModels
 			m_YouTubeService = youTubeService;
 			m_WebClientService = webClientService;
 			m_SearchResultViewViewModel = searchResultViewViewModel;
+			m_PlaylistListViewViewModel = playlistListViewViewModel;
 			playlistListViewViewModel.SelectionChanged += PlaylistListViewViewModel_SelectionChanged;
 
 			Title = new ReactivePropertySlim<string>().AddTo(m_Disposables);
@@ -85,6 +91,11 @@ namespace PlaylistEditor.ViewModels
 		/// プレイリスト
 		/// </summary>
 		private Playlist Playlist { get; set; }
+
+		/// <summary>
+		/// プレイリスト一覧
+		/// </summary>
+		public ReactiveCollection<IPlaylistListViewItemViewModel> PlaylistList => m_PlaylistListViewViewModel.PlaylistList;
 
 		#endregion
 
@@ -140,6 +151,18 @@ namespace PlaylistEditor.ViewModels
 		{
 			var selectedItemIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.Id);
 			await m_YouTubeService.RemovePlaylistItems(selectedItemIds);
+			await UpdatePlaylistItemList(Playlist);
+		}
+
+		/// <summary>
+		/// プレイリストアイテムを移動する
+		/// </summary>
+		/// <returns></returns>
+		public async Task MovePlaylistItemAsync(IPlaylistListViewItemViewModel playlist)
+		{
+			var selectedItemIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.Id);
+			var selectedItemResourceIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.ResourcesId);
+			await m_YouTubeService.MovePlaylistItems(selectedItemIds, selectedItemResourceIds, playlist.Id);
 			await UpdatePlaylistItemList(Playlist);
 		}
 
