@@ -90,7 +90,7 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// プレイリスト
 		/// </summary>
-		private Playlist Playlist { get; set; }
+		private Playlist? Playlist { get; set; }
 
 		/// <summary>
 		/// プレイリスト一覧
@@ -107,7 +107,7 @@ namespace PlaylistEditor.ViewModels
 		/// <param name="itemViewModel"></param>
 		private async void PlaylistListViewViewModel_SelectionChanged(Interfaces.IPlaylistListViewItemViewModel itemViewModel)
 		{
-			await UpdatePlaylistItemList(itemViewModel.Playlist);
+			await UpdatePlaylistItemList(itemViewModel?.Playlist);
 		}
 
 		/// <summary>
@@ -115,13 +115,15 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		/// <param name="itemViewModel"></param>
 		/// <returns></returns>
-		private async Task UpdatePlaylistItemList(Playlist playlist)
+		private async Task UpdatePlaylistItemList(Playlist? playlist)
 		{
+			PlaylistItemList.Clear();
 			Playlist = playlist;
+			if (playlist == null) return;
+
 			Title.Value = playlist.Title;
 			Description.Value = playlist.Description;
 
-			PlaylistItemList.Clear();
 			var playlistItems = await m_YouTubeService.GetPlaylistItems(playlist.PlaylistId);
 			foreach (var item in playlistItems)
 			{

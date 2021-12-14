@@ -13,33 +13,33 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="20" />
-			<RowDefinition Height="200" />
-			<RowDefinition Height="80" />
-			<RowDefinition />
-		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="400" />
+			<ColumnDefinition Width="2"/>
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 
 		<!-- ビデオ -->
+		<!--
 		<TextBlock Grid.Row="0" Grid.Column="0">Movie</TextBlock>
+		-->
 		<!-- 検索領域 -->
+		<!--
 		<v:SearchFormView  Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Margin="5"
 						   DataContext="{Binding SearchFormViewViewModel}"/>
+		-->
 		<!-- 検索結果領域 -->
+		<!--
 		<v:SearchResultView Grid.Row="3" Grid.Column="0" Margin="5"
 							DataContext="{Binding SearchResultViewViewModel}"/>
+		-->
 
-		<!-- プレイリスト -->
-		<TextBlock Grid.Row="0" Grid.Column="1">Playlist</TextBlock>
 		<!-- プレイリスト一覧領域 -->
-		<v:PlaylistListView Grid.Row="1" Grid.Column="1" Margin="5"
+		<v:PlaylistListView Grid.Column="0"
 							DataContext="{Binding PlaylistListViewViewModel}"/>
+		<GridSplitter Grid.Column="1" />
 		<!-- プレイリストコンテンツ領域 -->
-		<v:PlaylistContentView Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Margin="5"
+		<v:PlaylistContentView Grid.Column="2"
 							   DataContext="{Binding PlaylistContentViewViewModel}"/>
 	</Grid>
 </Window>

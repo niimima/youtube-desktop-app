@@ -5,31 +5,39 @@
 			 xmlns:vm="using:PlaylistEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PlaylistEditor.Views.PlaylistListView">
-	<ListBox Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-			 Items="{Binding PlaylistList}" SelectedItem="{Binding SelectedItem.Value}">
-		<ListBox.ItemsPanel>
-			<ItemsPanelTemplate>
-				<StackPanel Orientation="Horizontal" />
-			</ItemsPanelTemplate>
-		</ListBox.ItemsPanel>
-		<ListBox.DataTemplates>
-			<DataTemplate DataType="{x:Type vm:PlaylistListViewItemViewModel}">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="40" />
-						<RowDefinition Height="110" />
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="200"/>
-						<ColumnDefinition Width="150" />
-					</Grid.ColumnDefinitions>
-					<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="5"
-						   Source="{Binding Image.Value}" 
-						   HorizontalAlignment="Center" VerticalAlignment="Center" />
-					<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
-					<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
-				</Grid>
-			</DataTemplate>
-		</ListBox.DataTemplates>
-	</ListBox>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50"/>
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<DockPanel Grid.Row="0">
+			<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" FontSize="18" Margin="5">Playlists</TextBlock>
+			<StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Orientation="Horizontal">
+				<Button Margin="5">Add Playlist</Button>
+				<Button Margin="5">Remove Playlist</Button>
+			</StackPanel>
+		</DockPanel>
+		<ListBox Grid.Row="1" Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+				 Items="{Binding PlaylistList}" SelectedItem="{Binding SelectedItem.Value}">
+			<ListBox.DataTemplates>
+				<DataTemplate DataType="{x:Type vm:PlaylistListViewItemViewModel}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40" />
+							<RowDefinition Height="110" />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="200"/>
+							<ColumnDefinition Width="150" />
+						</Grid.ColumnDefinitions>
+						<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="5"
+							   Source="{Binding Image.Value}"
+							   HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.DataTemplates>
+		</ListBox>
+	</Grid>
 </UserControl>
