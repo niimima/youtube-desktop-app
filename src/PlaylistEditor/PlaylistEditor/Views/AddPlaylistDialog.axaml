@@ -3,7 +3,50 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="400" Height="225"
         x:Class="PlaylistEditor.Views.AddPlaylistDialog"
         Title="AddPlaylistDialog">
-  Welcome to Avalonia!
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="250"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50"/>
+			<RowDefinition />
+			<RowDefinition Height="50"/>
+		</Grid.RowDefinitions>
+
+		<!-- タイトル -->
+		<TextBlock Grid.Row="0" Grid.Column="0"
+				   VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10">
+			Title:
+		</TextBlock>
+		<TextBox Grid.Row="0" Grid.Column="1"
+				 Text="{Binding Title}" HorizontalAlignment="Left" Height="20" Margin="10" Width="250"/>
+
+		<!-- 概要 -->
+		<TextBlock Grid.Row="1" Grid.Column="0" 
+				   VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10">
+			Description:
+		</TextBlock>
+		<TextBox Grid.Row="1" Grid.Column="1"
+				 Text="{Binding Description}"
+				 HorizontalAlignment="Left" VerticalAlignment="Stretch"
+				 Margin="10" Width="250"
+				 AcceptsReturn="True" TextWrapping="Wrap"/>
+
+		<!-- OK,キャンセル -->
+		<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			<Button Name="m_OKButton"
+					Margin="10" Width="80" HorizontalContentAlignment="Center">
+				OK
+			</Button>
+			<Button Name="m_CancelButton"
+					Margin="10" Width="80" HorizontalContentAlignment="Center">
+				Cancel
+			</Button>
+		</StackPanel>
+	</Grid>
 </Window>

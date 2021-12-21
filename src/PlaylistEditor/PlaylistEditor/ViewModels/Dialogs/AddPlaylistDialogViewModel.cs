@@ -11,6 +11,8 @@ namespace PlaylistEditor.ViewModels.Dialogs
 	/// </summary>
 	public class AddPlaylistDialogViewModel : ViewModelBase
 	{
+		#region プロパティ
+
 		/// <summary>
 		/// タイトル
 		/// </summary>
@@ -20,5 +22,12 @@ namespace PlaylistEditor.ViewModels.Dialogs
 		/// 概要
 		/// </summary>
 		public string Description { get; set; }
+
+		/// <summary>
+		/// 結果
+		/// </summary>
+		public bool Result { get; set; }
+
+		#endregion
 	}
 }

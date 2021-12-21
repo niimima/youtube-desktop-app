@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ReactiveUI;
 using System.Reactive.Linq;
+using System.Reactive;
 
 namespace PlaylistEditor.ViewModels
 {
@@ -58,7 +59,7 @@ namespace PlaylistEditor.ViewModels
 			m_WebClientService = webClientService;
 
 			// ダイアログを表示するインタラクションを保持
-			ShowAddPlaylistDialog = new Interaction<AddPlaylistDialogViewModel, bool>();
+			ShowAddPlaylistDialog = new Interaction<Unit, AddPlaylistDialogViewModel>();
 		}
 
 		#endregion
@@ -78,7 +79,7 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// プレイリストを追加するダイアログを表示するインタラクション
 		/// </summary>
-		public Interaction<AddPlaylistDialogViewModel, bool> ShowAddPlaylistDialog { get; }
+		public Interaction<Unit, AddPlaylistDialogViewModel> ShowAddPlaylistDialog { get; }
 
 		#endregion
 
@@ -110,9 +111,7 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		public async Task AddPlaylistAsync()
 		{
-			var vm = new AddPlaylistDialogViewModel();
-			var result = await ShowAddPlaylistDialog.Handle(vm);
-			if (result == false) return;
+			var resultVm = await ShowAddPlaylistDialog.Handle(Unit.Default);
 		}
 
 		public void RemovePlaylist()
