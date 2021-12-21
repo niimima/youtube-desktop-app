@@ -1,6 +1,8 @@
 ﻿using PlaylistEditor.Models;
 using PlaylistEditor.Services;
+using PlaylistEditor.ViewModels.Dialogs;
 using PlaylistEditor.ViewModels.Interfaces;
+using PlaylistEditor.Views;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
@@ -9,6 +11,8 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
+using ReactiveUI;
+using System.Reactive.Linq;
 
 namespace PlaylistEditor.ViewModels
 {
@@ -52,6 +56,9 @@ namespace PlaylistEditor.ViewModels
 
 			m_YouTubeService = youTubeService;
 			m_WebClientService = webClientService;
+
+			// ダイアログを表示するインタラクションを保持
+			ShowAddPlaylistDialog = new Interaction<AddPlaylistDialogViewModel, bool>();
 		}
 
 		#endregion
@@ -67,6 +74,11 @@ namespace PlaylistEditor.ViewModels
 		/// 選択されているプレイリスト
 		/// </summary>
 		public ReactivePropertySlim<PlaylistListViewItemViewModel> SelectedItem { get; set; }
+
+		/// <summary>
+		/// プレイリストを追加するダイアログを表示するインタラクション
+		/// </summary>
+		public Interaction<AddPlaylistDialogViewModel, bool> ShowAddPlaylistDialog { get; }
 
 		#endregion
 
@@ -91,6 +103,21 @@ namespace PlaylistEditor.ViewModels
 			{
 				PlaylistList.Add(new PlaylistListViewItemViewModel(playlist, m_WebClientService));
 			}
+		}
+
+		/// <summary>
+		/// プレイリストを追加する
+		/// </summary>
+		public async Task AddPlaylistAsync()
+		{
+			var vm = new AddPlaylistDialogViewModel();
+			var result = await ShowAddPlaylistDialog.Handle(vm);
+			if (result == false) return;
+		}
+
+		public void RemovePlaylist()
+		{
+
 		}
 
 		#endregion

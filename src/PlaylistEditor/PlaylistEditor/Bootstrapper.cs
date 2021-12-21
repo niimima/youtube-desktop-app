@@ -27,8 +27,8 @@ namespace PlaylistEditor
             var youtubeService = new YouTubeServiceWrapper();
             await youtubeService.Initialize();
             services.RegisterConstant<IYouTubeService>(youtubeService);
-
             services.RegisterLazySingleton<IWebClientService>(() => new WebClientService());
+
             // VM登録
             services.RegisterLazySingleton<IPlaylistListViewViewModel>(() => {
                 var vm = new PlaylistListViewViewModel(resolver.GetService<IYouTubeService>(), resolver.GetService<IWebClientService>());

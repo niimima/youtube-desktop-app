@@ -1,6 +1,8 @@
 ﻿using PlaylistEditor.Models;
+using PlaylistEditor.ViewModels.Dialogs;
 using PlaylistEditor.ViewModels.Interfaces;
 using Reactive.Bindings;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +25,10 @@ namespace PlaylistEditor.ViewModels
 		/// プレイリスト一覧
 		/// </summary>
 		ReactiveCollection<IPlaylistListViewItemViewModel> PlaylistList { get; }
+
+		/// <summary>
+		/// プレイリストを追加するダイアログを表示するインタラクション
+		/// </summary>
+		Interaction<AddPlaylistDialogViewModel, bool> ShowAddPlaylistDialog { get; }
 	}
 }

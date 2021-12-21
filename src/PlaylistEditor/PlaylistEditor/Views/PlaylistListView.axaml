@@ -13,8 +13,8 @@
 		<DockPanel Grid.Row="0">
 			<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" FontSize="18" Margin="5">Playlists</TextBlock>
 			<StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Orientation="Horizontal">
-				<Button Margin="5">Add Playlist</Button>
-				<Button Margin="5">Remove Playlist</Button>
+				<Button Margin="5" Command="{Binding AddPlaylistAsync}">Add Playlist</Button>
+				<Button Margin="5" Command="{Binding RemovePlaylist}">Remove Playlist</Button>
 			</StackPanel>
 		</DockPanel>
 		<ListBox Grid.Row="1" Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Auto"
