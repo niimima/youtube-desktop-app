@@ -16,12 +16,12 @@ namespace PlaylistEditor.ViewModels.Dialogs
 		/// <summary>
 		/// タイトル
 		/// </summary>
-		public string Title { get; set; }
+		public string Title { get; set; } = string.Empty;
 
 		/// <summary>
 		/// 概要
 		/// </summary>
-		public string Description { get; set; }
+		public string Description { get; set; } = string.Empty;
 
 		/// <summary>
 		/// 結果

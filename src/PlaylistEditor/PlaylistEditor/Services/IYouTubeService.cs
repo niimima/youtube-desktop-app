@@ -60,5 +60,20 @@ namespace PlaylistEditor.Services
 		/// <param name="playlistId">移動先のプレイリストID</param>
 		/// <returns></returns>
 		Task MovePlaylistItems(IEnumerable<string> ids, IEnumerable<Google.Apis.YouTube.v3.Data.ResourceId> resourceIds, string playlistId);
+
+		/// <summary>
+		/// プレイリストを追加します
+		/// </summary>
+		/// <param name="title">タイトル</param>
+		/// <param name="description">概要</param>
+		/// <returns></returns>
+		Task AddPlaylist(string title, string description);
+
+		/// <summary>
+		/// プレイリストを削除します
+		/// </summary>
+		/// <param name="id">ID</param>
+		/// <returns></returns>
+		Task DeletePlaylist(string id);
 	}
 }

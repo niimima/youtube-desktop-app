@@ -99,8 +99,11 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		internal async Task Initialize()
 		{
+			// プレイリスト一覧を空にする
+			PlaylistList.Clear();
+
 			var playlists = await m_YouTubeService.GetMyPlaylists();
-			foreach(var playlist in playlists)
+			foreach (var playlist in playlists)
 			{
 				PlaylistList.Add(new PlaylistListViewItemViewModel(playlist, m_WebClientService));
 			}
@@ -111,12 +114,26 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		public async Task AddPlaylistAsync()
 		{
+			// ダイアログを表示
 			var resultVm = await ShowAddPlaylistDialog.Handle(Unit.Default);
+			if (resultVm.Result == false) return;
+
+			// OKが押下された場合に追加
+			await m_YouTubeService.AddPlaylist(resultVm.Title, resultVm.Description);
+
+			// プレイリストを取得しなおす
+			await Initialize();
 		}
 
-		public void RemovePlaylist()
+		/// <summary>
+		/// プレイリストを削除する
+		/// </summary>
+		public async Task RemovePlaylist()
 		{
+			await m_YouTubeService.DeletePlaylist(SelectedItem.Value.Id);
 
+			// プレイリストを取得しなおす
+			await Initialize();
 		}
 
 		#endregion

@@ -161,6 +161,25 @@ namespace PlaylistEditor.Services
 			}
 		}
 
+		/// <inheritdoc/>
+		public async Task AddPlaylist(string title, string description)
+		{
+			var newPlaylist = new Google.Apis.YouTube.v3.Data.Playlist();
+			newPlaylist.Snippet = new PlaylistSnippet();
+			newPlaylist.Snippet.Title = title;
+			newPlaylist.Snippet.Description = description;
+			newPlaylist.Status = new PlaylistStatus();
+			newPlaylist.Status.PrivacyStatus = "private";
+			await m_YouTubeService!.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
+		}
+
+		/// <inheritdoc/>
+		public async Task DeletePlaylist(string id)
+		{
+			// 指定のIDと一致するプレイリストを削除する
+			await m_YouTubeService!.Playlists.Delete(id).ExecuteAsync();
+		}
+
 		#endregion
 
 		private async void AddPlaylistItems(ResourceId resourceId, string playlistId)
