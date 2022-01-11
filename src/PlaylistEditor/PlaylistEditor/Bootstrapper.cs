@@ -25,7 +25,8 @@ namespace PlaylistEditor
             // サービス登録
             // youtubeサービスはAuthentication Tokenの発行処理が入り、ブラウザとのやり取りが必要となるため遅延せずに初めに必ず行う
             var youtubeService = new YouTubeServiceWrapper();
-            await youtubeService.Initialize();
+            youtubeService.Initialize().Wait();
+
             services.RegisterConstant<IYouTubeService>(youtubeService);
             services.RegisterLazySingleton<IWebClientService>(() => new WebClientService());
 
