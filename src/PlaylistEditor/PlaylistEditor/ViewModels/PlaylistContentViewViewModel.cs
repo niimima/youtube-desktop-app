@@ -1,14 +1,19 @@
 ﻿using PlaylistEditor.Models;
 using PlaylistEditor.Services;
+using PlaylistEditor.ViewModels.Dialogs;
 using PlaylistEditor.ViewModels.Interfaces;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PlaylistEditor.ViewModels
 {
@@ -66,6 +71,17 @@ namespace PlaylistEditor.ViewModels
 			Title = new ReactivePropertySlim<string>().AddTo(m_Disposables);
 			Description = new ReactivePropertySlim<string>().AddTo(m_Disposables);
 			PlaylistItemList = new ReactiveCollection<PlaylistContentViewItemViewModel>().AddTo(m_Disposables);
+
+			Playlist = new ReactivePropertySlim<Playlist?>().AddTo(m_Disposables);
+			CanAddVideosToPlaylistItemAsync = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
+			Playlist.Subscribe(v => CanAddVideosToPlaylistItemAsync.Value = (v != null));
+			AddVideosToPlaylistItemAsyncCommand = CanAddVideosToPlaylistItemAsync
+				.ToReactiveCommand()
+				.WithSubscribe(async () => await AddVideosToPlaylistItemAsync())
+				.AddTo(m_Disposables);
+
+			// ダイアログを表示するインタラクションを保持
+			ShowAddPlaylistItemDialog = new Interaction<Unit, AddPlaylistItemDialogViewModel>();
 		}
 
 		#endregion
@@ -88,14 +104,29 @@ namespace PlaylistEditor.ViewModels
 		public ReactiveCollection<PlaylistContentViewItemViewModel> PlaylistItemList { get; }
 
 		/// <summary>
+		/// 動画をプレイリストアイテムに追加できるか
+		/// </summary>
+		public ReactivePropertySlim<bool> CanAddVideosToPlaylistItemAsync { get; }
+
+		/// <summary>
 		/// プレイリスト
 		/// </summary>
-		private Playlist? Playlist { get; set; }
+		private ReactivePropertySlim<Playlist?> Playlist { get; set; }
 
 		/// <summary>
 		/// プレイリスト一覧
 		/// </summary>
 		public ReactiveCollection<IPlaylistListViewItemViewModel> PlaylistList => m_PlaylistListViewViewModel.PlaylistList;
+
+		/// <summary>
+		/// プレイリストを追加するダイアログを表示するインタラクション
+		/// </summary>
+		public Interaction<Unit, AddPlaylistItemDialogViewModel> ShowAddPlaylistItemDialog { get; }
+
+		/// <summary>
+		/// 動画をプレイリストアイテムに追加するコマンド
+		/// </summary>
+		public Reactive.Bindings.ReactiveCommand AddVideosToPlaylistItemAsyncCommand { get; }
 
 		#endregion
 
@@ -118,7 +149,7 @@ namespace PlaylistEditor.ViewModels
 		private async Task UpdatePlaylistItemList(Playlist? playlist)
 		{
 			PlaylistItemList.Clear();
-			Playlist = playlist;
+			Playlist.Value = playlist;
 			if (playlist == null) return;
 
 			Title.Value = playlist.Title;
@@ -140,9 +171,13 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		public async Task AddVideosToPlaylistItemAsync()
 		{
-			var videos = m_SearchResultViewViewModel.CheckedItems;
-			await m_YouTubeService.AddVideosToPlaylistItem(videos, Playlist);
-			await UpdatePlaylistItemList(Playlist);
+			// ダイアログを表示
+			var resultVm = await ShowAddPlaylistItemDialog.Handle(Unit.Default);
+			if (resultVm.Result == false) return;
+
+			var videos = resultVm.CheckedItems;
+			await m_YouTubeService.AddVideosToPlaylistItem(videos, Playlist.Value!);
+			await UpdatePlaylistItemList(Playlist.Value);
 		}
 
 		/// <summary>
@@ -153,7 +188,7 @@ namespace PlaylistEditor.ViewModels
 		{
 			var selectedItemIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.Id);
 			await m_YouTubeService.RemovePlaylistItems(selectedItemIds);
-			await UpdatePlaylistItemList(Playlist);
+			await UpdatePlaylistItemList(Playlist.Value);
 		}
 
 		/// <summary>
@@ -165,7 +200,7 @@ namespace PlaylistEditor.ViewModels
 			var selectedItemIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.Id);
 			var selectedItemResourceIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.ResourcesId);
 			await m_YouTubeService.MovePlaylistItems(selectedItemIds, selectedItemResourceIds, playlist.Id);
-			await UpdatePlaylistItemList(Playlist);
+			await UpdatePlaylistItemList(Playlist.Value);
 		}
 
 		#endregion

@@ -6,16 +6,16 @@ using PlaylistEditor.ViewModels.Dialogs;
 namespace PlaylistEditor.Views
 {
 	/// <summary>
-	/// プレイリストを追加ダイアログ
+	/// プレイリストアイテムを追加ダイアログ
 	/// </summary>
-	public partial class AddPlaylistDialog : Window
+	public partial class AddPlaylistItemDialog : Window
 	{
 		#region 構築
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public AddPlaylistDialog()
+		public AddPlaylistItemDialog()
 		{
 			InitializeComponent();
 #if DEBUG
@@ -30,9 +30,6 @@ namespace PlaylistEditor.Views
 			cancelButton.Click += CancelButton_Click;
 		}
 
-		/// <summary>
-		/// コンポーネントの初期化
-		/// </summary>
 		private void InitializeComponent()
 		{
 			AvaloniaXamlLoader.Load(this);
@@ -49,7 +46,7 @@ namespace PlaylistEditor.Views
 		/// <param name="e"></param>
 		private void OkButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 		{
-			((AddPlaylistDialogViewModel)DataContext!).Result = true;
+			((AddPlaylistItemDialogViewModel)DataContext!).Result = true;
 			Close();
 		}
 

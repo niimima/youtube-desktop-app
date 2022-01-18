@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:v="using:PlaylistEditor.Views"
+        xmlns:vm="using:PlaylistEditor.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="400" Height="800"
+        x:Class="PlaylistEditor.Views.AddPlaylistItemDialog"
+        Title="AddPlaylistItemDialog">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50"/>
+			<RowDefinition />
+			<RowDefinition Height="50"/>
+		</Grid.RowDefinitions>
+
+		<!-- 検索領域 -->
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="100"/>
+			</Grid.ColumnDefinitions>
+			<DockPanel Grid.Column="0"
+					   Margin="5"
+					   LastChildFill="True">
+				<TextBlock VerticalAlignment="Center" Margin="10">Search : </TextBlock>
+				<TextBox Name="m_SearchWordTextBox" Height="20" Watermark="Search Word"
+						 Text="{Binding Path=SearchWord.Value}">
+					<TextBox.KeyBindings>
+						<KeyBinding Gesture="Enter" Command="{Binding Search}"/>
+					</TextBox.KeyBindings>
+				</TextBox>
+			</DockPanel>
+			<Button Grid.Column="1" Width="80" Margin="10"
+					HorizontalContentAlignment="Center"
+					Command="{Binding Search}">
+				Search
+			</Button>
+		</Grid>
+
+		<!-- 検索結果領域 -->
+		<ListBox Name="SearchResultListBox" Grid.Row="1"
+				 Items="{Binding SearchResultList}" SelectedItem="{Binding SelectedItem.Value}">
+			<ListBox.DataTemplates>
+				<DataTemplate DataType="{x:Type vm:SearchResultViewItemViewModel}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40" />
+							<RowDefinition Height="80" />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="30"/>
+							<ColumnDefinition Width="160"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<CheckBox Grid.Row="0" Grid.RowSpan="2"
+								  VerticalAlignment="Center"
+								  IsChecked="{Binding IsChecked.Value}"/>
+						<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+							   Source="{Binding Image.Value}" />
+						<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
+						<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Description}" TextWrapping="Wrap" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.DataTemplates>
+		</ListBox>
+
+		<!-- OK,キャンセル -->
+		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Name="m_OKButton"
+					Margin="10" Width="80" HorizontalContentAlignment="Center">
+				OK
+			</Button>
+			<Button Name="m_CancelButton"
+					Margin="10" Width="80" HorizontalContentAlignment="Center">
+				Cancel
+			</Button>
+		</StackPanel>
+	</Grid>
+</Window>

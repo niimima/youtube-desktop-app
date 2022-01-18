@@ -24,7 +24,7 @@
 				<TextBlock Margin="5" Text="{Binding Description.Value}" />
 			</StackPanel>
 			<StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
-				<Button Margin="5" Command="{Binding AddVideosToPlaylistItemAsync}">
+				<Button Margin="5" Command="{Binding AddVideosToPlaylistItemAsyncCommand}">
 					Add Video To Playlist
 				</Button>
 				<Button Margin="5" Command="{Binding RemovePlaylistItemAsync}">

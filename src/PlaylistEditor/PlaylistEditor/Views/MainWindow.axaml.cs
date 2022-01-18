@@ -8,6 +8,8 @@ using ReactiveUI;
 using System;
 using System.Reactive;
 using System.Threading.Tasks;
+using Splat;
+using PlaylistEditor.Services;
 
 namespace PlaylistEditor.Views
 {
@@ -28,6 +30,7 @@ namespace PlaylistEditor.Views
             this.AttachDevTools();
 #endif
 			this.WhenActivated(d => d(ViewModel!.PlaylistListViewViewModel.ShowAddPlaylistDialog.RegisterHandler(DoShowDialogAsync)));
+			this.WhenActivated(d => d(ViewModel!.PlaylistContentViewViewModel.ShowAddPlaylistItemDialog.RegisterHandler(DoShowAddPlaylistItemDialogAsync)));
 		}
 
 		/// <summary>
@@ -56,6 +59,24 @@ namespace PlaylistEditor.Views
 			// ダイアログを表示
 			var dialog = new AddPlaylistDialog();
 			var vm = new AddPlaylistDialogViewModel();
+			dialog.DataContext = vm;
+			await dialog.ShowDialog<Unit>(this);
+
+			// 表示結果を設定
+			interaction.SetOutput(vm);
+		}
+
+		/// <summary>
+		/// プレイリストアイテムを追加ダイアログを表示する。
+		/// </summary>
+		/// <param name="interaction">インタラクション</param>
+		/// <returns></returns>
+		private async Task DoShowAddPlaylistItemDialogAsync(InteractionContext<Unit, AddPlaylistItemDialogViewModel> interaction)
+		{
+			// ダイアログを表示
+			var dialog = new AddPlaylistItemDialog();
+			// TODO うまく注入するような実装にしたいが、できていない
+			var vm = new AddPlaylistItemDialogViewModel(Locator.Current.GetService<IYouTubeService>(), Locator.Current.GetService<IWebClientService>());
 			dialog.DataContext = vm;
 			await dialog.ShowDialog<Unit>(this);
 

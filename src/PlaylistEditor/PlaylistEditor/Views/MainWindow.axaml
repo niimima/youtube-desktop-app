@@ -19,21 +19,6 @@
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 
-		<!-- ビデオ -->
-		<!--
-		<TextBlock Grid.Row="0" Grid.Column="0">Movie</TextBlock>
-		-->
-		<!-- 検索領域 -->
-		<!--
-		<v:SearchFormView  Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Margin="5"
-						   DataContext="{Binding SearchFormViewViewModel}"/>
-		-->
-		<!-- 検索結果領域 -->
-		<!--
-		<v:SearchResultView Grid.Row="3" Grid.Column="0" Margin="5"
-							DataContext="{Binding SearchResultViewViewModel}"/>
-		-->
-
 		<!-- プレイリスト一覧領域 -->
 		<v:PlaylistListView Grid.Column="0"
 							DataContext="{Binding PlaylistListViewViewModel}"/>

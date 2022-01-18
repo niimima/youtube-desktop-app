@@ -10,7 +10,7 @@ namespace PlaylistEditor.Services
 	/// <summary>
 	/// WebクライエントサービスのI/F
 	/// </summary>
-	interface IWebClientService
+	public interface IWebClientService
 	{
 		/// <summary>
 		/// 指定したURLから画像を取得する

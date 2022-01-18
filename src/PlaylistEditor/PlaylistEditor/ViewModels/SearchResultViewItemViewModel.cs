@@ -9,7 +9,7 @@ namespace PlaylistEditor.ViewModels
 	/// <summary>
 	/// 検索結果の要素VM
 	/// </summary>
-	class SearchResultViewItemViewModel : ViewModelBase
+	public class SearchResultViewItemViewModel : ViewModelBase
 	{
 		#region フィールド
 
