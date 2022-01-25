@@ -80,6 +80,26 @@ namespace PlaylistEditor.Services
 		}
 
 		/// <inheritdoc/>
+		public async Task<IEnumerable<Models.Playlist>> SearchPlaylist(string searchWord, int maxResultCount = 50)
+		{
+			// YouTubeサービスに問い合わせ
+			var searchListRequest = m_YouTubeService!.Search.List("snippet");
+			searchListRequest.Q = searchWord;
+			searchListRequest.MaxResults = maxResultCount;
+			var searchListResponse = await searchListRequest.ExecuteAsync();
+
+			// 取得した結果からプレイリストを取得
+			var searchPlaylists = searchListResponse.Items.Where(item => item.Id.Kind == "youtube#playlist");
+			var resultPlaylists = new List<Models.Playlist>();
+			foreach(var item in searchPlaylists)
+			{
+				resultPlaylists.Add(new Models.Playlist(item.Id.PlaylistId, item.Snippet.Title, item.Snippet.Description, item.Snippet.Thumbnails.Default__.Url));
+			}
+
+			return resultPlaylists;
+		}
+
+		/// <inheritdoc/>
 		public async Task<IEnumerable<Models.Playlist>> GetMyPlaylists()
 		{
 			var newPlaylist = m_YouTubeService!.Playlists.List("snippet");

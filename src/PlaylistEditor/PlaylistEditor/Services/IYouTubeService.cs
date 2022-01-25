@@ -25,6 +25,15 @@ namespace PlaylistEditor.Services
 		/// <returns>動画一覧</returns>
 		Task<IEnumerable<Video>> SearchVideo(string searchWord, int maxResultCount = 50);
 
+
+		/// <summary>
+		/// プレイリストを検索します
+		/// </summary>
+		/// <param name="searchWord">検索ワード</param>
+		/// <param name="maxResultCount">検索件数</param>
+		/// <returns>動画一覧</returns>
+		Task<IEnumerable<Playlist>> SearchPlaylist(string searchWord, int maxResultCount = 50);
+
 		/// <summary>
 		/// 自身のプレイリストを取得します
 		/// </summary>

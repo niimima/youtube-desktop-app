@@ -23,14 +23,25 @@
 				<TextBlock Margin="5" Text="{Binding Title.Value}" />
 				<TextBlock Margin="5" Text="{Binding Description.Value}" />
 			</StackPanel>
-			<StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
-				<Button Margin="5" Command="{Binding AddVideosToPlaylistItemAsyncCommand}">
-					Add Video To Playlist
-				</Button>
-				<Button Margin="5" Command="{Binding RemovePlaylistItemAsync}">
-					Remove
-				</Button>
-			</StackPanel>
+			<Grid Grid.Column="1">
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
+					<Button Margin="5" Command="{Binding AddVideosToPlaylistItemAsyncCommand}">
+						Add Videos To Playlist
+					</Button>
+					<Button Margin="5" Command="{Binding RemovePlaylistItemAsync}">
+						Remove
+					</Button>
+				</StackPanel>
+				<StackPanel Grid.Row="1">
+					<Button Margin="5" Command="{Binding ClonePlaylistItemsFromPlaylistCommand}">
+						Clone PlaylistItems From Playlist
+					</Button>
+				</StackPanel>
+			</Grid>
 			<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top">
 				<ComboBox Name="PlaylistListComboBox" Margin="5" Width="200" Items="{Binding PlaylistList}">
 					<ComboBox.ItemTemplate>

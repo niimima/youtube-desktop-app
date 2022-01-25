@@ -19,5 +19,10 @@ namespace PlaylistEditor.ViewModels
 		/// プレイリストアイテムを追加するダイアログを表示するインタラクション
 		/// </summary>
 		public Interaction<Unit, AddPlaylistItemDialogViewModel> ShowAddPlaylistItemDialog { get; }
+
+		/// <summary>
+		/// 公開されているプレイリストアイテムを自分のプレイリストアイテムとして追加するダイアログを表示するインタラクション
+		/// </summary>
+		public Interaction<Unit, ClonePlaylistItemsDialogViewModel> ShowClonePlaylistItemsDialog { get; }
 	}
 }

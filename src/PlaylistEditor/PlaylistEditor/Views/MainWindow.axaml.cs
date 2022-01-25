@@ -31,6 +31,7 @@ namespace PlaylistEditor.Views
 #endif
 			this.WhenActivated(d => d(ViewModel!.PlaylistListViewViewModel.ShowAddPlaylistDialog.RegisterHandler(DoShowDialogAsync)));
 			this.WhenActivated(d => d(ViewModel!.PlaylistContentViewViewModel.ShowAddPlaylistItemDialog.RegisterHandler(DoShowAddPlaylistItemDialogAsync)));
+			this.WhenActivated(d => d(ViewModel!.PlaylistContentViewViewModel.ShowClonePlaylistItemsDialog.RegisterHandler(DoShowShowClonePlaylistItemsDialogAsync)));
 		}
 
 		/// <summary>
@@ -77,6 +78,24 @@ namespace PlaylistEditor.Views
 			var dialog = new AddPlaylistItemDialog();
 			// TODO うまく注入するような実装にしたいが、できていない
 			var vm = new AddPlaylistItemDialogViewModel(Locator.Current.GetService<IYouTubeService>(), Locator.Current.GetService<IWebClientService>());
+			dialog.DataContext = vm;
+			await dialog.ShowDialog<Unit>(this);
+
+			// 表示結果を設定
+			interaction.SetOutput(vm);
+		}
+
+		/// <summary>
+		/// 公開されているプレイリストアイテムを自分のプレイリストアイテムとして追加するダイアログを表示する。
+		/// </summary>
+		/// <param name="interaction">インタラクション</param>
+		/// <returns></returns>
+		private async Task DoShowShowClonePlaylistItemsDialogAsync(InteractionContext<Unit, ClonePlaylistItemsDialogViewModel> interaction)
+		{
+			// ダイアログを表示
+			var dialog = new ClonePlaylistItemsDialog();
+			// TODO うまく注入するような実装にしたいが、できていない
+			var vm = new ClonePlaylistItemsDialogViewModel(Locator.Current.GetService<IYouTubeService>(), Locator.Current.GetService<IWebClientService>());
 			dialog.DataContext = vm;
 			await dialog.ShowDialog<Unit>(this);
 
