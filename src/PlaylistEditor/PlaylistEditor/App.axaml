@@ -8,6 +8,7 @@
 
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
+		<!-- 日本語が文字化けするためフォントを変更する -->
         <Style Selector="TextBox">
 			<Setter Property="FontFamily" Value="Meiryo UI" />
 		</Style>

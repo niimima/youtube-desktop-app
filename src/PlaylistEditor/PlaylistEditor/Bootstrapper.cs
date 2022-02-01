@@ -1,10 +1,6 @@
 ﻿using PlaylistEditor.Services;
 using PlaylistEditor.ViewModels;
 using Splat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PlaylistEditor
@@ -36,15 +32,12 @@ namespace PlaylistEditor
 				_ = vm.Initialize();
                 return vm;
                 });
-            services.RegisterLazySingleton<ISearchResultViewViewModel>(() => new SearchResultViewViewModel(resolver.GetService<IWebClientService>()));
             services.RegisterLazySingleton<IPlaylistContentViewViewModel>(() => new PlaylistContentViewViewModel(
                 resolver.GetService<IYouTubeService>(), resolver.GetService<IWebClientService>(), resolver.GetService<IPlaylistListViewViewModel>()));
-            services.RegisterLazySingleton<ISearchFormViewViewModel>(() => new SearchFormViewViewModel(resolver.GetService<IYouTubeService>(), resolver.GetService<ISearchResultViewViewModel>()));
             services.RegisterLazySingleton<IMainWindowViewModel>(() => new MainWindowViewModel(
 				resolver.GetService<IPlaylistListViewViewModel>(),
-				resolver.GetService<IPlaylistContentViewViewModel>(),
-				resolver.GetService<ISearchResultViewViewModel>(),
-				resolver.GetService<ISearchFormViewViewModel>()));
+				resolver.GetService<IPlaylistContentViewViewModel>()
+                ));
 		}
 	}
 }

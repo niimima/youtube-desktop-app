@@ -13,17 +13,11 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		/// <param name="playlistListViewViewModel"></param>
 		/// <param name="playlistContentViewViewModel"></param>
-		/// <param name="searchResultViewViewModel"></param>
-		/// <param name="searchFormViewViewModel"></param>
 		public MainWindowViewModel(IPlaylistListViewViewModel playlistListViewViewModel,
-			IPlaylistContentViewViewModel playlistContentViewViewModel,
-			ISearchResultViewViewModel searchResultViewViewModel,
-			ISearchFormViewViewModel searchFormViewViewModel)
+			IPlaylistContentViewViewModel playlistContentViewViewModel)
 		{
 			PlaylistListViewViewModel = playlistListViewViewModel;
 			PlaylistContentViewViewModel = playlistContentViewViewModel;
-			SearchResultViewViewModel = searchResultViewViewModel;
-			SearchFormViewViewModel = searchFormViewViewModel;
 		}
 
 		#endregion
@@ -39,16 +33,6 @@ namespace PlaylistEditor.ViewModels
 		/// プレイリストコンテンツのVM
 		/// </summary>
 		public IPlaylistContentViewViewModel PlaylistContentViewViewModel { get; }
-
-		/// <summary>
-		/// 検索結果ビューのVM
-		/// </summary>
-		public ISearchResultViewViewModel SearchResultViewViewModel { get; }
-
-		/// <summary>
-		/// 検索フォームのVM
-		/// </summary>
-		public ISearchFormViewViewModel SearchFormViewViewModel { get; }
 
 		#endregion
 	}
