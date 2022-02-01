@@ -38,7 +38,7 @@ namespace PlaylistEditor
                 });
             services.RegisterLazySingleton<ISearchResultViewViewModel>(() => new SearchResultViewViewModel(resolver.GetService<IWebClientService>()));
             services.RegisterLazySingleton<IPlaylistContentViewViewModel>(() => new PlaylistContentViewViewModel(
-                resolver.GetService<IYouTubeService>(), resolver.GetService<IWebClientService>(), resolver.GetService<IPlaylistListViewViewModel>(), resolver.GetService<ISearchResultViewViewModel>()));
+                resolver.GetService<IYouTubeService>(), resolver.GetService<IWebClientService>(), resolver.GetService<IPlaylistListViewViewModel>()));
             services.RegisterLazySingleton<ISearchFormViewViewModel>(() => new SearchFormViewViewModel(resolver.GetService<IYouTubeService>(), resolver.GetService<ISearchResultViewViewModel>()));
             services.RegisterLazySingleton<IMainWindowViewModel>(() => new MainWindowViewModel(
 				resolver.GetService<IPlaylistListViewViewModel>(),

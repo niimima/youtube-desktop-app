@@ -34,12 +34,7 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		private IWebClientService m_WebClientService;
 
-		/// <summary>
-		/// 検索結果ビューのVM
-		/// </summary>
-		private ISearchResultViewViewModel m_SearchResultViewViewModel;
-
-		/// <summary>
+        /// <summary>
 		/// プレイリスト一覧のVM
 		/// </summary>
 		private IPlaylistListViewViewModel m_PlaylistListViewViewModel;
@@ -59,13 +54,11 @@ namespace PlaylistEditor.ViewModels
 		internal PlaylistContentViewViewModel(
 			IYouTubeService youTubeService,
 			IWebClientService webClientService,
-			IPlaylistListViewViewModel playlistListViewViewModel,
-			ISearchResultViewViewModel searchResultViewViewModel)
+			IPlaylistListViewViewModel playlistListViewViewModel)
 		{
 			m_YouTubeService = youTubeService;
 			m_WebClientService = webClientService;
-			m_SearchResultViewViewModel = searchResultViewViewModel;
-			m_PlaylistListViewViewModel = playlistListViewViewModel;
+            m_PlaylistListViewViewModel = playlistListViewViewModel;
 			playlistListViewViewModel.SelectionChanged += PlaylistListViewViewModel_SelectionChanged;
 
 			Title = new ReactivePropertySlim<string>().AddTo(m_Disposables);
