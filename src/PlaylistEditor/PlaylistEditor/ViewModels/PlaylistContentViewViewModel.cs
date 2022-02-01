@@ -11,16 +11,14 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace PlaylistEditor.ViewModels
 {
-	/// <summary>
-	/// プレイリストコンテンツのVM
-	/// </summary>
-	internal class PlaylistContentViewViewModel : IPlaylistContentViewViewModel
+    /// <summary>
+    /// プレイリストコンテンツのVM
+    /// </summary>
+    internal class PlaylistContentViewViewModel : IPlaylistContentViewViewModel
 	{
 		#region フィールド
 

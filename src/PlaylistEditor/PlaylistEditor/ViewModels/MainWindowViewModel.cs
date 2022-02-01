@@ -1,14 +1,9 @@
-using PlaylistEditor.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace PlaylistEditor.ViewModels
 {
-	/// <summary>
-	/// メインウインドウのVM
-	/// </summary>
-	internal class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
+    /// <summary>
+    /// メインウインドウのVM
+    /// </summary>
+    internal class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
 	{
 
 		#region 構築

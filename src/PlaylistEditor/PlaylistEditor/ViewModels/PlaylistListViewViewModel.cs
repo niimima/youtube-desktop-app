@@ -1,15 +1,10 @@
-﻿using PlaylistEditor.Models;
-using PlaylistEditor.Services;
+﻿using PlaylistEditor.Services;
 using PlaylistEditor.ViewModels.Dialogs;
 using PlaylistEditor.ViewModels.Interfaces;
-using PlaylistEditor.Views;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Disposables;
-using System.Text;
 using System.Threading.Tasks;
 using ReactiveUI;
 using System.Reactive.Linq;
@@ -17,10 +12,10 @@ using System.Reactive;
 
 namespace PlaylistEditor.ViewModels
 {
-	/// <summary>
-	/// プレイリスト一覧のVM
-	/// </summary>
-	class PlaylistListViewViewModel : ViewModelBase, IPlaylistListViewViewModel
+    /// <summary>
+    /// プレイリスト一覧のVM
+    /// </summary>
+    class PlaylistListViewViewModel : ViewModelBase, IPlaylistListViewViewModel
 	{
 		#region フィールド
 
