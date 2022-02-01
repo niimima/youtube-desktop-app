@@ -43,7 +43,7 @@
 		<ListBox Name="SearchResultListBox" Grid.Row="1"
 				 Items="{Binding SearchResultList}" SelectedItem="{Binding SelectedItem.Value}">
 			<ListBox.DataTemplates>
-				<DataTemplate DataType="{x:Type vm:SearchResultPlaylistItemViewModel}">
+				<DataTemplate DataType="{x:Type vm:PlaylistViewModel}">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="40" />

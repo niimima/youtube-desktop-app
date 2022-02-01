@@ -46,7 +46,7 @@ namespace PlaylistEditor.ViewModels
 		public PlaylistListViewViewModel(IYouTubeService youTubeService, IWebClientService webClientService)
 		{
 			PlaylistList = new ReactiveCollection<IPlaylistListViewItemViewModel>().AddTo(m_Disposables);
-			SelectedItem = new ReactivePropertySlim<PlaylistListViewItemViewModel>().AddTo(m_Disposables);
+			SelectedItem = new ReactivePropertySlim<PlaylistViewModel>().AddTo(m_Disposables);
 			// 選択アイテムが変更されたら選択変更イベントも通知する
 			SelectedItem.Subscribe(_ => RaiseSelectionChanged());
 
@@ -69,7 +69,7 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// 選択されているプレイリスト
 		/// </summary>
-		public ReactivePropertySlim<PlaylistListViewItemViewModel> SelectedItem { get; set; }
+		public ReactivePropertySlim<PlaylistViewModel> SelectedItem { get; set; }
 
 		/// <summary>
 		/// プレイリストを追加するダイアログを表示するインタラクション
@@ -100,7 +100,7 @@ namespace PlaylistEditor.ViewModels
 			var playlists = await m_YouTubeService.GetMyPlaylists();
 			foreach (var playlist in playlists)
 			{
-				PlaylistList.Add(new PlaylistListViewItemViewModel(playlist, m_WebClientService));
+				PlaylistList.Add(new PlaylistViewModel(playlist, m_WebClientService));
 			}
 		}
 

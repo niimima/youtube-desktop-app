@@ -48,8 +48,8 @@ namespace PlaylistEditor.ViewModels.Dialogs
 			m_WebClientService = webClientService;
 
 			SearchWord = new ReactivePropertySlim<string>().AddTo(m_Disposables);
-			SearchResultList = new ReactiveCollection<SearchResultViewItemViewModel>().AddTo(m_Disposables);
-			SelectedItem = new ReactivePropertySlim<SearchResultViewItemViewModel>().AddTo(m_Disposables);
+			SearchResultList = new ReactiveCollection<VideoViewModel>().AddTo(m_Disposables);
+			SelectedItem = new ReactivePropertySlim<VideoViewModel>().AddTo(m_Disposables);
 		}
 
 		#endregion
@@ -64,12 +64,12 @@ namespace PlaylistEditor.ViewModels.Dialogs
 		/// <summary>
 		/// 検索結果一覧
 		/// </summary>
-		public ReactiveCollection<SearchResultViewItemViewModel> SearchResultList { get; }
+		public ReactiveCollection<VideoViewModel> SearchResultList { get; }
 
 		/// <summary>
 		/// 検索結果一覧で選択されたアイテム
 		/// </summary>
-		public ReactivePropertySlim<SearchResultViewItemViewModel> SelectedItem { get; set; }
+		public ReactivePropertySlim<VideoViewModel> SelectedItem { get; set; }
 
 		/// <summary>
 		/// 検索結果一覧で選択されたアイテム一覧
@@ -103,7 +103,7 @@ namespace PlaylistEditor.ViewModels.Dialogs
 			SearchResultList.Clear();
 			foreach(var video in videos)
 			{
-				SearchResultList.Add(new SearchResultViewItemViewModel(video, m_WebClientService));
+				SearchResultList.Add(new VideoViewModel(video, m_WebClientService));
 			}
 		}
 

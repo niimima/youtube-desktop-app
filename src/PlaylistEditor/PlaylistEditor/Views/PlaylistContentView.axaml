@@ -60,7 +60,7 @@
 		<ListBox Grid.Row="1"
 				 Items="{Binding PlaylistItemList}">
 			<ListBox.DataTemplates>
-				<DataTemplate DataType="{x:Type vm:PlaylistContentViewItemViewModel}">
+				<DataTemplate DataType="{x:Type vm:PlaylistItemViewModel}">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="40" />

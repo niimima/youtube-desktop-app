@@ -14,7 +14,7 @@ namespace PlaylistEditor.ViewModels
 	/// <summary>
 	/// プレイリストコンテンツの子要素VM
 	/// </summary>
-	class PlaylistContentViewItemViewModel
+	class PlaylistItemViewModel : ViewModelBase
 	{
 		#region フィールド
 
@@ -43,7 +43,7 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		/// <param name="item">プレイリストアイテム</param>
 		/// <param name="webClientService">Webクライエントサービス</param>
-		public PlaylistContentViewItemViewModel(PlaylistItem item, IWebClientService webClientService)
+		public PlaylistItemViewModel(PlaylistItem item, IWebClientService webClientService)
 		{
 			Image = new ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap>().AddTo(m_Disposables);
 			IsChecked = new ReactivePropertySlim<bool>().AddTo(m_Disposables);

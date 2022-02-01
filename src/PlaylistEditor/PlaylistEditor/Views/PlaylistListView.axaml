@@ -20,7 +20,7 @@
 		<ListBox Grid.Row="1" Margin="5" ScrollViewer.HorizontalScrollBarVisibility="Auto"
 				 Items="{Binding PlaylistList}" SelectedItem="{Binding SelectedItem.Value}">
 			<ListBox.DataTemplates>
-				<DataTemplate DataType="{x:Type vm:PlaylistListViewItemViewModel}">
+				<DataTemplate DataType="{x:Type vm:PlaylistViewModel}">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="40" />

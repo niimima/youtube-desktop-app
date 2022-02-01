@@ -1,5 +1,6 @@
 ﻿using PlaylistEditor.Models;
 using PlaylistEditor.Services;
+using PlaylistEditor.ViewModels.Interfaces;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Reactive.Disposables;
@@ -7,9 +8,9 @@ using System.Reactive.Disposables;
 namespace PlaylistEditor.ViewModels
 {
 	/// <summary>
-	/// プレイリストの検索結果の要素VM
+	/// プレイリストのVM
 	/// </summary>
-	class SearchResultPlaylistItemViewModel : ViewModelBase
+	class PlaylistViewModel : ViewModelBase, IPlaylistListViewItemViewModel
 	{
 		#region フィールド
 
@@ -37,7 +38,7 @@ namespace PlaylistEditor.ViewModels
 		/// </summary>
 		/// <param name="video">動画</param>
 		/// <param name="webClientService">Webクライエントサービス</param>
-		public SearchResultPlaylistItemViewModel(Playlist playlist, IWebClientService webClientService)
+		public PlaylistViewModel(Playlist playlist, IWebClientService webClientService)
 		{
 			Image = new ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap>().AddTo(m_Disposables);
 			IsChecked = new ReactivePropertySlim<bool>().AddTo(m_Disposables);

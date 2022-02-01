@@ -1,6 +1,5 @@
 ﻿using PlaylistEditor.Models;
 using PlaylistEditor.Services;
-using PlaylistEditor.ViewModels.Interfaces;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Reactive.Disposables;
@@ -8,9 +7,9 @@ using System.Reactive.Disposables;
 namespace PlaylistEditor.ViewModels
 {
 	/// <summary>
-	/// プレイリスト一覧の要素VM
+	/// 動画のVM
 	/// </summary>
-	class PlaylistListViewItemViewModel : IPlaylistListViewItemViewModel
+	public class VideoViewModel : ViewModelBase
 	{
 		#region フィールド
 
@@ -20,9 +19,9 @@ namespace PlaylistEditor.ViewModels
 		private readonly CompositeDisposable m_Disposables = new CompositeDisposable();
 
 		/// <summary>
-		/// プレイリスト
+		/// 動画
 		/// </summary>
-		private Playlist m_Playlist;
+		private Video m_Video;
 
 		/// <summary>
 		/// Webクライエントサービス
@@ -36,17 +35,18 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		/// <param name="playlist">プレイリスト</param>
+		/// <param name="video">動画</param>
 		/// <param name="webClientService">Webクライエントサービス</param>
-		public PlaylistListViewItemViewModel(Playlist playlist, IWebClientService webClientService)
+		public VideoViewModel(Video video, IWebClientService webClientService)
 		{
 			Image = new ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap>().AddTo(m_Disposables);
+			IsChecked = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
 
-			m_Playlist = playlist;
+			m_Video = video;
 			m_WebClientService = webClientService;
-			if (string.IsNullOrEmpty(playlist.ThumbnailUrl) == false)
+			if (string.IsNullOrEmpty(video.ThumbnailUrl) == false)
 			{
-				m_WebClientService.DownloadImage(playlist.ThumbnailUrl, Image);
+				m_WebClientService.DownloadImage(video.ThumbnailUrl, Image);
 			}
 		}
 
@@ -55,29 +55,34 @@ namespace PlaylistEditor.ViewModels
 		#region プロパティ
 
 		/// <summary>
-		/// プレイリスト
+		/// 動画
 		/// </summary>
-		public Playlist Playlist => m_Playlist;
+		public Video Video => m_Video;
 
 		/// <summary>
 		/// ID
 		/// </summary>
-		public string Id => m_Playlist.PlaylistId;
+		public string Id => m_Video.VideoId;
 
 		/// <summary>
 		/// タイトル
 		/// </summary>
-		public string Title => m_Playlist.Title;
+		public string Title => m_Video.Title;
 
 		/// <summary>
-		/// 概要
+		/// 動画の概要
 		/// </summary>
-		public string Description => m_Playlist.Description;
+		public string Description => m_Video.Description;
 
 		/// <summary>
 		/// サムネイル画像
 		/// </summary>
 		public ReactivePropertySlim<Avalonia.Media.Imaging.Bitmap> Image { get; }
+
+		/// <summary>
+		/// チェック状態か
+		/// </summary>
+		public ReactivePropertySlim<bool> IsChecked { get; }
 
 		#endregion
 	}

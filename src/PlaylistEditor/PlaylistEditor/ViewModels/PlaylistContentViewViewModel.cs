@@ -18,7 +18,7 @@ namespace PlaylistEditor.ViewModels
     /// <summary>
     /// プレイリストコンテンツのVM
     /// </summary>
-    internal class PlaylistContentViewViewModel : IPlaylistContentViewViewModel
+    internal class PlaylistContentViewViewModel : ViewModelBase, IPlaylistContentViewViewModel
 	{
 		#region フィールド
 
@@ -61,7 +61,7 @@ namespace PlaylistEditor.ViewModels
 
 			Title = new ReactivePropertySlim<string>().AddTo(m_Disposables);
 			Description = new ReactivePropertySlim<string>().AddTo(m_Disposables);
-			PlaylistItemList = new ReactiveCollection<PlaylistContentViewItemViewModel>().AddTo(m_Disposables);
+			PlaylistItemList = new ReactiveCollection<PlaylistItemViewModel>().AddTo(m_Disposables);
 
 			Playlist = new ReactivePropertySlim<Playlist?>().AddTo(m_Disposables);
 			CanAddVideosToPlaylistItemAsync = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
@@ -101,7 +101,7 @@ namespace PlaylistEditor.ViewModels
 		/// <summary>
 		/// プレイリストアイテムの一覧
 		/// </summary>
-		public ReactiveCollection<PlaylistContentViewItemViewModel> PlaylistItemList { get; }
+		public ReactiveCollection<PlaylistItemViewModel> PlaylistItemList { get; }
 
 		/// <summary>
 		/// 動画をプレイリストアイテムに追加できるか
@@ -173,7 +173,7 @@ namespace PlaylistEditor.ViewModels
 			var playlistItems = await m_YouTubeService.GetPlaylistItems(playlist.PlaylistId);
 			foreach (var item in playlistItems)
 			{
-				PlaylistItemList.Add(new PlaylistContentViewItemViewModel(item, m_WebClientService));
+				PlaylistItemList.Add(new PlaylistItemViewModel(item, m_WebClientService));
 			}
 		}
 
