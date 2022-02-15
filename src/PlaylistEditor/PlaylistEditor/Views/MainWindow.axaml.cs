@@ -32,12 +32,13 @@ namespace PlaylistEditor.Views
 			this.WhenActivated(d => d(ViewModel!.PlaylistListViewViewModel.ShowAddPlaylistDialog.RegisterHandler(DoShowDialogAsync)));
 			this.WhenActivated(d => d(ViewModel!.PlaylistContentViewViewModel.ShowAddPlaylistItemDialog.RegisterHandler(DoShowAddPlaylistItemDialogAsync)));
 			this.WhenActivated(d => d(ViewModel!.PlaylistContentViewViewModel.ShowClonePlaylistItemsDialog.RegisterHandler(DoShowShowClonePlaylistItemsDialogAsync)));
+			this.WhenActivated(d => d(ViewModel!.PlaylistContentViewViewModel.ShowAddOrClonePlaylistItemsDialog.RegisterHandler(DoShowAddOrClonePlaylistItemsDialogAsync)));
 		}
 
-		/// <summary>
-		/// コンポーネントを初期化する。
-		/// </summary>
-		private void InitializeComponent()
+        /// <summary>
+        /// コンポーネントを初期化する。
+        /// </summary>
+        private void InitializeComponent()
 		{
 			AvaloniaXamlLoader.Load(this);
 		}
@@ -102,6 +103,24 @@ namespace PlaylistEditor.Views
 			// 表示結果を設定
 			interaction.SetOutput(vm);
 		}
+
+		/// <summary>
+		/// 検索したチャンネルから動画・プレイリストアイテムを自分のプレイリストアイテムに追加するダイアログを表示する。
+		/// </summary>
+		/// <param name="interaction">インタラクション</param>
+		/// <returns></returns>
+        private async Task DoShowAddOrClonePlaylistItemsDialogAsync(InteractionContext<Unit, AddOrClonePlaylistItemsDialogViewModel> interaction)
+        {
+			// ダイアログを表示
+			var dialog = new AddOrClonePlaylistItemsDialog();
+			// TODO うまく注入するような実装にしたいが、できていない
+			var vm = new AddOrClonePlaylistItemsDialogViewModel(Locator.Current.GetService<IYouTubeService>(), Locator.Current.GetService<IWebClientService>());
+			dialog.DataContext = vm;
+			await dialog.ShowDialog<Unit>(this);
+
+			// 表示結果を設定
+			interaction.SetOutput(vm);
+        }
 
 		#endregion
 	}

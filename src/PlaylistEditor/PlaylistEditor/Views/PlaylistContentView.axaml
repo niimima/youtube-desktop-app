@@ -35,6 +35,9 @@
 					<Button Margin="5" Command="{Binding RemovePlaylistItemAsync}">
 						Remove
 					</Button>
+					<Button Margin="5" Command="{Binding AddOrClonePlaylistItemsCommand}">
+						Add Or Clone PlaylistItems
+					</Button>
 				</StackPanel>
 				<StackPanel Grid.Row="1">
 					<Button Margin="5" Command="{Binding ClonePlaylistItemsFromPlaylistCommand}">

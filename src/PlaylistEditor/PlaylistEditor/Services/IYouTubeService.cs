@@ -25,14 +25,37 @@ namespace PlaylistEditor.Services
 		/// <returns>動画一覧</returns>
 		Task<IEnumerable<Video>> SearchVideo(string searchWord, int maxResultCount = 50);
 
+		/// <summary>
+		/// チャンネルを検索します
+		/// </summary>
+		/// <param name="channelId">チャンネルID</param>
+		/// <param name="maxResultCount">検索件数</param>
+		/// <returns>プレイリスト一覧</returns>
+		Task<IEnumerable<Video>> SearchVideoByChannelId(string channelId, int maxResultCount = 50);
 
 		/// <summary>
 		/// プレイリストを検索します
 		/// </summary>
 		/// <param name="searchWord">検索ワード</param>
 		/// <param name="maxResultCount">検索件数</param>
-		/// <returns>動画一覧</returns>
+		/// <returns>プレイリスト一覧</returns>
 		Task<IEnumerable<Playlist>> SearchPlaylist(string searchWord, int maxResultCount = 50);
+
+		/// <summary>
+		/// プレイリストを検索します
+		/// </summary>
+		/// <param name="channelId">チャンネルID</param>
+		/// <param name="maxResultCount">検索件数</param>
+		/// <returns>プレイリスト一覧</returns>
+		Task<IEnumerable<Playlist>> SearchPlaylistByChannelId(string channelId, int maxResultCount = 50);
+
+		/// <summary>
+		/// チャンネルを検索します
+		/// </summary>
+		/// <param name="searchWord">検索ワード</param>
+		/// <param name="maxResultCount">検索件数</param>
+		/// <returns>チャンネル一覧</returns>
+		Task<IEnumerable<Channel>> SearchChannel(string searchWord, int maxResultCount = 50);
 
 		/// <summary>
 		/// 自身のプレイリストを取得します

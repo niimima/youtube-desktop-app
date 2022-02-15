@@ -80,6 +80,26 @@ namespace PlaylistEditor.Services
 		}
 
 		/// <inheritdoc/>
+        public async Task<IEnumerable<Models.Video>> SearchVideoByChannelId(string channelId, int maxResultCount = 50)
+        {
+			// YouTubeサービスに問い合わせ
+			var searchListRequest = m_YouTubeService!.Search.List("snippet");
+			searchListRequest.ChannelId = channelId;
+			searchListRequest.MaxResults = maxResultCount;
+			var searchListResponse = await searchListRequest.ExecuteAsync();
+
+			// 取得した結果から動画を取得
+			var searchVideos = searchListResponse.Items.Where(item => item.Id.Kind == "youtube#video");
+			var resultVideos = new List<Models.Video>();
+			foreach(var item in searchVideos)
+			{
+				resultVideos.Add(new Models.Video(item.Id.VideoId, item.Snippet.Title, item.Snippet.Description, item.Snippet.Thumbnails.Default__.Url));
+			}
+
+			return resultVideos;
+        }
+
+		/// <inheritdoc/>
 		public async Task<IEnumerable<Models.Playlist>> SearchPlaylist(string searchWord, int maxResultCount = 50)
 		{
 			// YouTubeサービスに問い合わせ
@@ -98,6 +118,47 @@ namespace PlaylistEditor.Services
 
 			return resultPlaylists;
 		}
+
+		/// <inheritdoc/>
+        public async Task<IEnumerable<Models.Playlist>> SearchPlaylistByChannelId(string channelId, int maxResultCount = 50)
+        {
+			// YouTubeサービスに問い合わせ
+			var searchListRequest = m_YouTubeService!.Playlists.List("snippet");
+			searchListRequest.ChannelId = channelId;
+			searchListRequest.MaxResults = maxResultCount;
+			var searchListResponse = await searchListRequest.ExecuteAsync();
+
+			// 取得した結果からプレイリストを取得
+			var searchPlaylists = searchListResponse.Items;
+			var resultPlaylists = new List<Models.Playlist>();
+			foreach(var item in searchPlaylists)
+			{
+				resultPlaylists.Add(new Models.Playlist(item.Id, item.Snippet.Title, item.Snippet.Description, item.Snippet.Thumbnails.Default__.Url));
+			}
+
+			return resultPlaylists;
+        }
+
+
+		/// <inheritdoc/>
+        public async Task<IEnumerable<Models.Channel>> SearchChannel(string searchWord, int maxResultCount = 50)
+        {
+			// YouTubeサービスに問い合わせ
+			var searchListRequest = m_YouTubeService!.Search.List("snippet");
+			searchListRequest.Q = searchWord;
+			searchListRequest.MaxResults = maxResultCount;
+			var searchListResponse = await searchListRequest.ExecuteAsync();
+
+			// 取得した結果からプレイリストを取得
+			var searchChannels = searchListResponse.Items.Where(item => item.Id.Kind == "youtube#channel");
+			var resultChannels = new List<Models.Channel>();
+			foreach(var item in searchChannels)
+			{
+				resultChannels.Add(new Models.Channel(item.Id.ChannelId, item.Snippet.Title, item.Snippet.Description, item.Snippet.Thumbnails.Default__.Url));
+			}
+
+			return resultChannels;
+        }
 
 		/// <inheritdoc/>
 		public async Task<IEnumerable<Models.Playlist>> GetMyPlaylists()
@@ -212,5 +273,5 @@ namespace PlaylistEditor.Services
 			playlistItem.Snippet.ResourceId = resourceId;
 			await m_YouTubeService!.PlaylistItems.Insert(playlistItem, "snippet").ExecuteAsync();
 		}
-	}
+    }
 }

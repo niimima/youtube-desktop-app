@@ -63,13 +63,16 @@ namespace PlaylistEditor.ViewModels
 			Description = new ReactivePropertySlim<string>().AddTo(m_Disposables);
 			PlaylistItemList = new ReactiveCollection<PlaylistItemViewModel>().AddTo(m_Disposables);
 
+			// コマンドの生成
 			Playlist = new ReactivePropertySlim<Playlist?>().AddTo(m_Disposables);
 			CanAddVideosToPlaylistItemAsync = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
 			CanClonePlaylistItemsFromPlaylist = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
+			CanAddOrClonePlaylistItems = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
 			Playlist.Subscribe(v => {
 				CanAddVideosToPlaylistItemAsync.Value = (v != null);
 				CanClonePlaylistItemsFromPlaylist.Value = (v != null);
-				});
+				CanAddOrClonePlaylistItems.Value = (v != null);
+                });
 			AddVideosToPlaylistItemAsyncCommand = CanAddVideosToPlaylistItemAsync
 				.ToReactiveCommand()
 				.WithSubscribe(async () => await AddVideosToPlaylistItemAsync())
@@ -78,10 +81,15 @@ namespace PlaylistEditor.ViewModels
 				.ToReactiveCommand()
 				.WithSubscribe(async () => await ClonePlaylistItemsFromPlaylist())
 				.AddTo(m_Disposables);
+            AddOrClonePlaylistItemsCommand = CanAddOrClonePlaylistItems
+				.ToReactiveCommand()
+				.WithSubscribe(async () => await AddOrClonePlaylistItems())
+				.AddTo(m_Disposables);
 
-			// ダイアログを表示するインタラクションを保持
-			ShowAddPlaylistItemDialog = new Interaction<Unit, AddPlaylistItemDialogViewModel>();
-			ShowClonePlaylistItemsDialog = new Interaction<Unit, ClonePlaylistItemsDialogViewModel>();
+            // ダイアログを表示するインタラクションを保持
+            ShowAddPlaylistItemDialog = new Interaction<Unit, AddPlaylistItemDialogViewModel>();
+            ShowClonePlaylistItemsDialog = new Interaction<Unit, ClonePlaylistItemsDialogViewModel>();
+            ShowAddOrClonePlaylistItemsDialog = new Interaction<Unit, AddOrClonePlaylistItemsDialogViewModel>();
 		}
 
 		#endregion
@@ -114,6 +122,11 @@ namespace PlaylistEditor.ViewModels
 		public ReactivePropertySlim<bool> CanClonePlaylistItemsFromPlaylist { get; }
 
 		/// <summary>
+		/// 動画をプレイリストアイテムに追加できるか
+		/// </summary>
+		public ReactivePropertySlim<bool> CanAddOrClonePlaylistItems { get; }
+
+		/// <summary>
 		/// プレイリスト
 		/// </summary>
 		private ReactivePropertySlim<Playlist?> Playlist { get; set; }
@@ -134,6 +147,11 @@ namespace PlaylistEditor.ViewModels
 		public Interaction<Unit, ClonePlaylistItemsDialogViewModel> ShowClonePlaylistItemsDialog { get; }
 
 		/// <summary>
+		/// 検索したチャンネルから動画・プレイリストアイテムを自分のプレイリストアイテムに追加するインタラクション
+		/// </summary>
+		public Interaction<Unit, AddOrClonePlaylistItemsDialogViewModel> ShowAddOrClonePlaylistItemsDialog { get; }
+
+		/// <summary>
 		/// 動画をプレイリストアイテムに追加するコマンド
 		/// </summary>
 		public Reactive.Bindings.ReactiveCommand AddVideosToPlaylistItemAsyncCommand { get; }
@@ -142,6 +160,11 @@ namespace PlaylistEditor.ViewModels
 		/// 公開されているプレイリストアイテムを自分のプレイリストアイテムとして追加するコマンド
 		/// </summary>
 		public Reactive.Bindings.ReactiveCommand ClonePlaylistItemsFromPlaylistCommand { get; }
+
+		/// <summary>
+		/// 検索したチャンネルから動画・プレイリストアイテムを自分のプレイリストアイテムに追加するコマンド
+		/// </summary>
+		public Reactive.Bindings.ReactiveCommand AddOrClonePlaylistItemsCommand { get; }
 
 		#endregion
 
@@ -218,6 +241,32 @@ namespace PlaylistEditor.ViewModels
 			await m_YouTubeService.AddVideosToPlaylistItem(videos, Playlist.Value!);
 			await UpdatePlaylistItemList(Playlist.Value);
 		}
+
+		/// <summary>
+		/// 検索したチャンネルから動画・プレイリストアイテムを自分のプレイリストアイテムに追加する
+		/// </summary>
+        public async Task AddOrClonePlaylistItems()
+        {
+			// ダイアログを表示
+			var resultVm = await ShowAddOrClonePlaylistItemsDialog.Handle(Unit.Default);
+			if (resultVm.Result == false) return;
+
+			/*
+			var playlists = resultVm.CheckedItems;
+			var videos = new List<Video>();
+			foreach (var playlist in playlists)
+			{
+				var playlistItems = await m_YouTubeService.GetPlaylistItems(playlist.PlaylistId);
+				foreach (var playlistItem in playlistItems)
+				{
+					videos.Add(new Video(playlistItem.ResourcesId.VideoId, playlistItem.Title, playlistItem.Description, playlistItem.ThumbnailUrl));
+				}
+			}
+
+			await m_YouTubeService.AddVideosToPlaylistItem(videos, Playlist.Value!);
+			await UpdatePlaylistItemList(Playlist.Value);
+			*/
+        }
 
 		/// <summary>
 		/// プレイリストアイテムを削除する
