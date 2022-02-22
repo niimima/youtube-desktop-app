@@ -251,21 +251,31 @@ namespace PlaylistEditor.ViewModels
 			var resultVm = await ShowAddOrClonePlaylistItemsDialog.Handle(Unit.Default);
 			if (resultVm.Result == false) return;
 
-			/*
-			var playlists = resultVm.CheckedItems;
-			var videos = new List<Video>();
-			foreach (var playlist in playlists)
-			{
-				var playlistItems = await m_YouTubeService.GetPlaylistItems(playlist.PlaylistId);
-				foreach (var playlistItem in playlistItems)
-				{
-					videos.Add(new Video(playlistItem.ResourcesId.VideoId, playlistItem.Title, playlistItem.Description, playlistItem.ThumbnailUrl));
-				}
-			}
+            switch (resultVm.ActiveTab.Value)
+            {
+				case ItemType.Playlist:
+                    var playlists = resultVm.CheckedPlaylists;
+                    var videos = new List<Video>();
+                    foreach (var playlist in playlists)
+                    {
+                        var playlistItems = await m_YouTubeService.GetPlaylistItems(playlist.PlaylistId);
+                        foreach (var playlistItem in playlistItems)
+                        {
+                            videos.Add(new Video(playlistItem.ResourcesId.VideoId, playlistItem.Title, playlistItem.Description, playlistItem.ThumbnailUrl));
+                        }
+                    }
 
-			await m_YouTubeService.AddVideosToPlaylistItem(videos, Playlist.Value!);
-			await UpdatePlaylistItemList(Playlist.Value);
-			*/
+                    await m_YouTubeService.AddVideosToPlaylistItem(videos, Playlist.Value!);
+                    await UpdatePlaylistItemList(Playlist.Value);
+					break;
+				case ItemType.Video:
+                    var checkedVideos = resultVm.CheckedVideos;
+                    await m_YouTubeService.AddVideosToPlaylistItem(checkedVideos, Playlist.Value!);
+                    await UpdatePlaylistItemList(Playlist.Value);
+                    break;
+				default:
+					break;
+            }
         }
 
 		/// <summary>

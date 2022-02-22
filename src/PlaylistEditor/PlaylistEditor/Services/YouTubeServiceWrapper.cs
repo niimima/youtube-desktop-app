@@ -21,6 +21,8 @@ namespace PlaylistEditor.Services
 	/// <remarks>
 	/// 以下のコードを参照して認証情報を取得している
 	/// https://github.com/youtube/api-samples/tree/master/dotnet
+	///
+	/// TODO 現状、挿入や削除といった場合は例外メッセージを出さずに処理してしまう
 	/// </remarks>
 	public class YouTubeServiceWrapper : IYouTubeService
 	{
@@ -188,14 +190,21 @@ namespace PlaylistEditor.Services
 			var resultPlaylistItems = new List<Models.PlaylistItem>();
 			foreach (var playlistItem in items.Items)
 			{
-				if (playlistItem.Snippet.Thumbnails.Default__ == null)
-				{
-					resultPlaylistItems.Add(new Models.PlaylistItem(playlistItem.Id, playlistItem.Snippet.ResourceId, playlistItem.Snippet.Title, playlistItem.Snippet.Description, string.Empty));
-				}
-				else
-				{
-					resultPlaylistItems.Add(new Models.PlaylistItem(playlistItem.Id, playlistItem.Snippet.ResourceId, playlistItem.Snippet.Title, playlistItem.Snippet.Description, playlistItem.Snippet.Thumbnails.Default__.Url));
-				}
+                try
+                {
+                    if (playlistItem.Snippet.Thumbnails.Default__ == null)
+                    {
+                        resultPlaylistItems.Add(new Models.PlaylistItem(playlistItem.Id, playlistItem.Snippet.ResourceId, playlistItem.Snippet.Title, playlistItem.Snippet.Description, string.Empty));
+                    }
+                    else
+                    {
+                        resultPlaylistItems.Add(new Models.PlaylistItem(playlistItem.Id, playlistItem.Snippet.ResourceId, playlistItem.Snippet.Title, playlistItem.Snippet.Description, playlistItem.Snippet.Thumbnails.Default__.Url));
+                    }
+                }
+                catch
+                {
+					// エラーが発生した場合は何もしない
+                }
 			}
 
 			return resultPlaylistItems;
@@ -207,16 +216,23 @@ namespace PlaylistEditor.Services
 			// 入力の検証
 			foreach (var video in videos)
 			{
-				// 以下を参考にプレイリストに指定の動画を追加
-				// https://github.com/youtube/api-samples/blob/master/dotnet/Google.Apis.YouTube.Samples.Playlists/PlaylistUpdates.cs#L94
-				var actualPlaylistItem = new Google.Apis.YouTube.v3.Data.PlaylistItem();
-				actualPlaylistItem.Snippet = new PlaylistItemSnippet();
-				actualPlaylistItem.Snippet.PlaylistId = playlist.PlaylistId;
-				actualPlaylistItem.Snippet.ResourceId = new ResourceId();
-				actualPlaylistItem.Snippet.ResourceId.Kind = "youtube#video";
-				actualPlaylistItem.Snippet.ResourceId.VideoId = video.VideoId;
-				_ = await m_YouTubeService!.PlaylistItems.Insert(actualPlaylistItem, "snippet").ExecuteAsync();
-			}
+                try
+                {
+                    // 以下を参考にプレイリストに指定の動画を追加
+                    // https://github.com/youtube/api-samples/blob/master/dotnet/Google.Apis.YouTube.Samples.Playlists/PlaylistUpdates.cs#L94
+                    var actualPlaylistItem = new Google.Apis.YouTube.v3.Data.PlaylistItem();
+                    actualPlaylistItem.Snippet = new PlaylistItemSnippet();
+                    actualPlaylistItem.Snippet.PlaylistId = playlist.PlaylistId;
+                    actualPlaylistItem.Snippet.ResourceId = new ResourceId();
+                    actualPlaylistItem.Snippet.ResourceId.Kind = "youtube#video";
+                    actualPlaylistItem.Snippet.ResourceId.VideoId = video.VideoId;
+                    _ = await m_YouTubeService!.PlaylistItems.Insert(actualPlaylistItem, "snippet").ExecuteAsync();
+                }
+                catch
+                {
+					// エラーが発生した場合は何もしない
+                }
+            }
 		}
 
 		/// <inheritdoc/>
@@ -224,7 +240,14 @@ namespace PlaylistEditor.Services
 		{
 			foreach (var id in ids)
 			{
-				await m_YouTubeService!.PlaylistItems.Delete(id).ExecuteAsync();
+                try
+                {
+                    await m_YouTubeService!.PlaylistItems.Delete(id).ExecuteAsync();
+                }
+                catch
+                {
+					// エラーが発生した場合は何もしない
+                }
 			}
 		}
 
@@ -234,44 +257,79 @@ namespace PlaylistEditor.Services
 		{
 			foreach (var id in resourcesIds)
 			{
-				AddPlaylistItems(id, playlistId);
+                try
+                {
+                    AddPlaylistItems(id, playlistId);
+                }
+                catch
+                {
+					// エラーが発生した場合は何もしない
+                }
 			}
 			foreach (var id in ids)
 			{
-				await m_YouTubeService!.PlaylistItems.Delete(id).ExecuteAsync();
+				try
+				{
+					await m_YouTubeService!.PlaylistItems.Delete(id).ExecuteAsync();
+				}
+				catch
+				{
+					// エラーが発生した場合は何もしない
+				}
 			}
 		}
 
 		/// <inheritdoc/>
 		public async Task AddPlaylist(string title, string description)
 		{
-			var newPlaylist = new Google.Apis.YouTube.v3.Data.Playlist();
-			newPlaylist.Snippet = new PlaylistSnippet();
-			newPlaylist.Snippet.Title = title;
-			newPlaylist.Snippet.Description = description;
-			newPlaylist.Status = new PlaylistStatus();
-			newPlaylist.Status.PrivacyStatus = "private";
-			await m_YouTubeService!.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
-		}
+            try
+            {
+                var newPlaylist = new Google.Apis.YouTube.v3.Data.Playlist();
+                newPlaylist.Snippet = new PlaylistSnippet();
+                newPlaylist.Snippet.Title = title;
+                newPlaylist.Snippet.Description = description;
+                newPlaylist.Status = new PlaylistStatus();
+                newPlaylist.Status.PrivacyStatus = "private";
+                await m_YouTubeService!.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
+            }
+            catch
+            {
+                // エラーが発生した場合は何もしない
+            }
+        }
 
-		/// <inheritdoc/>
-		public async Task DeletePlaylist(string id)
+        /// <inheritdoc/>
+        public async Task DeletePlaylist(string id)
 		{
-			// 指定のIDと一致するプレイリストを削除する
-			await m_YouTubeService!.Playlists.Delete(id).ExecuteAsync();
-		}
+            try
+            {
+                // 指定のIDと一致するプレイリストを削除する
+                await m_YouTubeService!.Playlists.Delete(id).ExecuteAsync();
+            }
+            catch
+            {
+                // エラーが発生した場合は何もしない
+            }
+        }
 
-		#endregion
+        #endregion
 
-		private async void AddPlaylistItems(ResourceId resourceId, string playlistId)
+        private async void AddPlaylistItems(ResourceId resourceId, string playlistId)
 		{
-			// 以下を参考にプレイリストに指定の動画を追加
-			// https://github.com/youtube/api-samples/blob/master/dotnet/Google.Apis.YouTube.Samples.Playlists/PlaylistUpdates.cs#L94
-			var playlistItem = new Google.Apis.YouTube.v3.Data.PlaylistItem();
-			playlistItem.Snippet = new PlaylistItemSnippet();
-			playlistItem.Snippet.PlaylistId = playlistId;
-			playlistItem.Snippet.ResourceId = resourceId;
-			await m_YouTubeService!.PlaylistItems.Insert(playlistItem, "snippet").ExecuteAsync();
+            try
+            {
+                // 以下を参考にプレイリストに指定の動画を追加
+                // https://github.com/youtube/api-samples/blob/master/dotnet/Google.Apis.YouTube.Samples.Playlists/PlaylistUpdates.cs#L94
+                var playlistItem = new Google.Apis.YouTube.v3.Data.PlaylistItem();
+                playlistItem.Snippet = new PlaylistItemSnippet();
+                playlistItem.Snippet.PlaylistId = playlistId;
+                playlistItem.Snippet.ResourceId = resourceId;
+                await m_YouTubeService!.PlaylistItems.Insert(playlistItem, "snippet").ExecuteAsync();
+            }
+            catch
+            {
+                // エラーが発生した場合は何もしない
+            }
 		}
     }
 }
