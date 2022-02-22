@@ -67,6 +67,7 @@ namespace PlaylistEditor.Services
 			// YouTubeサービスに問い合わせ
 			var searchListRequest = m_YouTubeService!.Search.List("snippet");
 			searchListRequest.Q = searchWord;
+			searchListRequest.Type = new List<string>() { "video" };
 			searchListRequest.MaxResults = maxResultCount;
 			var searchListResponse = await searchListRequest.ExecuteAsync();
 
@@ -88,10 +89,11 @@ namespace PlaylistEditor.Services
 			var searchListRequest = m_YouTubeService!.Search.List("snippet");
 			searchListRequest.ChannelId = channelId;
 			searchListRequest.MaxResults = maxResultCount;
+			searchListRequest.Type = new List<string>() { "video" };
 			var searchListResponse = await searchListRequest.ExecuteAsync();
 
 			// 取得した結果から動画を取得
-			var searchVideos = searchListResponse.Items.Where(item => item.Id.Kind == "youtube#video");
+			var searchVideos = searchListResponse.Items;
 			var resultVideos = new List<Models.Video>();
 			foreach(var item in searchVideos)
 			{
@@ -108,10 +110,11 @@ namespace PlaylistEditor.Services
 			var searchListRequest = m_YouTubeService!.Search.List("snippet");
 			searchListRequest.Q = searchWord;
 			searchListRequest.MaxResults = maxResultCount;
+			searchListRequest.Type = new List<string>() { "playlist" };
 			var searchListResponse = await searchListRequest.ExecuteAsync();
 
 			// 取得した結果からプレイリストを取得
-			var searchPlaylists = searchListResponse.Items.Where(item => item.Id.Kind == "youtube#playlist");
+			var searchPlaylists = searchListResponse.Items;
 			var resultPlaylists = new List<Models.Playlist>();
 			foreach(var item in searchPlaylists)
 			{
@@ -149,10 +152,11 @@ namespace PlaylistEditor.Services
 			var searchListRequest = m_YouTubeService!.Search.List("snippet");
 			searchListRequest.Q = searchWord;
 			searchListRequest.MaxResults = maxResultCount;
+			searchListRequest.Type = new List<string>() { "channel" };
 			var searchListResponse = await searchListRequest.ExecuteAsync();
 
 			// 取得した結果からプレイリストを取得
-			var searchChannels = searchListResponse.Items.Where(item => item.Id.Kind == "youtube#channel");
+			var searchChannels = searchListResponse.Items;
 			var resultChannels = new List<Models.Channel>();
 			foreach(var item in searchChannels)
 			{
