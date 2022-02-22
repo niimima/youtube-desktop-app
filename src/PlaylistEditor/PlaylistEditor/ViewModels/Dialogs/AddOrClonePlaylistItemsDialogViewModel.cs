@@ -164,7 +164,7 @@ namespace PlaylistEditor.ViewModels.Dialogs
 					break;
 				case ItemType.Video:
 					var videos = await m_YouTubeService.SearchVideoByChannelId(SelectedItem.Value.Id);
-					TargetPlaylistList.Clear();
+					TargetVideoList.Clear();
                     foreach (var video in videos)
                     {
 						TargetVideoList.Add(new VideoViewModel(video, m_WebClientService));

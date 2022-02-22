@@ -7,7 +7,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		Width="800" Height="800"
         x:Class="PlaylistEditor.Views.AddOrClonePlaylistItemsDialog"
-        Title="AddOrClonePlaylistItemsDialog">
+        Title="チャンネル検索して追加">
 	<Window.Resources>
 		<r:EnumToBooleanConverter x:Key="EnumToBoolean" />
 	</Window.Resources>
@@ -19,31 +19,21 @@
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
+			<ColumnDefinition Width="2"/>
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 
 		<!-- 検索領域 -->
 		<Grid Grid.Row="0" Grid.Column="0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition Width="100"/>
-			</Grid.ColumnDefinitions>
-			<DockPanel Grid.Column="0"
-					   Margin="5"
+			<DockPanel Margin="5"
 					   LastChildFill="True">
-				<TextBlock VerticalAlignment="Center" Margin="10">Search : </TextBlock>
-				<TextBox Name="m_SearchWordTextBox" Height="20" Watermark="Search Word"
+				<TextBox Name="m_SearchWordTextBox" Height="20" Watermark="チャンネル名で検索"
 						 Text="{Binding Path=SearchWord.Value}">
 					<TextBox.KeyBindings>
 						<KeyBinding Gesture="Enter" Command="{Binding Search}"/>
 					</TextBox.KeyBindings>
 				</TextBox>
 			</DockPanel>
-			<Button Grid.Column="1" Width="80" Margin="10"
-					HorizontalContentAlignment="Center"
-					Command="{Binding Search}">
-				Search
-			</Button>
 		</Grid>
 
 		<!-- 検索結果領域 -->
@@ -57,23 +47,21 @@
 							<RowDefinition Height="80" />
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="30"/>
 							<ColumnDefinition Width="160"/>
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
-						<CheckBox Grid.Row="0" Grid.RowSpan="2"
-								  VerticalAlignment="Center"
-								  IsChecked="{Binding IsChecked.Value}"/>
-						<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+						<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
 							   Source="{Binding Image.Value}" />
-						<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
-						<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Description}" TextWrapping="Wrap" />
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="0,0,0,10" />
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
 					</Grid>
 				</DataTemplate>
 			</ListBox.DataTemplates>
 		</ListBox>
 
-		<StackPanel Grid.Row="0" Grid.Column="1"
+		<Border Grid.Column="1" />
+
+		<StackPanel Grid.Row="0" Grid.Column="2"
 					Margin="5"
 					Orientation="Horizontal" HorizontalAlignment="Right">
 			<RadioButton Margin="5"
@@ -87,7 +75,7 @@
 		</StackPanel>
 
 		<!-- プレイリスト領域 -->
-		<ListBox Name="TargetPlaylistListBox" Grid.Row="1" Grid.Column="1"
+		<ListBox Name="TargetPlaylistListBox" Grid.Row="1" Grid.Column="2"
 				 Items="{Binding TargetPlaylistList}"
 				 IsVisible="{Binding Path=ActiveTab.Value, Mode=OneWay, Converter={StaticResource EnumToBoolean}, ConverterParameter=Playlist}">
 			<ListBox.DataTemplates>
@@ -115,7 +103,7 @@
 		</ListBox>
 
 		<!-- 動画領域 -->
-		<ListBox Name="TargetVideoListBox" Grid.Row="1" Grid.Column="1"
+		<ListBox Name="TargetVideoListBox" Grid.Row="1" Grid.Column="2"
 				 Items="{Binding TargetVideoList}"
 				 IsVisible="{Binding Path=ActiveTab.Value, Mode=OneWay, Converter={StaticResource EnumToBoolean}, ConverterParameter=Video}">
 			<ListBox.DataTemplates>
@@ -143,14 +131,14 @@
 		</ListBox>
 
 		<!-- OK,キャンセル -->
-		<StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+		<StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
 			<Button Name="m_OKButton"
 					Margin="10" Width="80" HorizontalContentAlignment="Center">
 				OK
 			</Button>
 			<Button Name="m_CancelButton"
 					Margin="10" Width="80" HorizontalContentAlignment="Center">
-				Cancel
+				キャンセル
 			</Button>
 		</StackPanel>
 	</Grid>

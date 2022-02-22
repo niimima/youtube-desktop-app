@@ -16,10 +16,9 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
 				<ColumnDefinition />
-				<ColumnDefinition />
+				<ColumnDefinition Width="340"/>
 			</Grid.ColumnDefinitions>
 			<StackPanel Grid.Column="0">
-
 				<TextBlock Margin="5" Text="{Binding Title.Value}" />
 				<TextBlock Margin="5" Text="{Binding Description.Value}" />
 			</StackPanel>
@@ -30,18 +29,18 @@
 				</Grid.RowDefinitions>
 				<StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
 					<Button Margin="5" Command="{Binding AddVideosToPlaylistItemAsyncCommand}">
-						Add Videos To Playlist
+						動画を追加...
 					</Button>
-					<Button Margin="5" Command="{Binding RemovePlaylistItemAsync}">
-						Remove
-					</Button>
-					<Button Margin="5" Command="{Binding AddOrClonePlaylistItemsCommand}">
-						Add Or Clone PlaylistItems
+					<Button Margin="5" Command="{Binding RemovePlaylistItemAsyncCommand}">
+						削除
 					</Button>
 				</StackPanel>
-				<StackPanel Grid.Row="1">
+				<StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
 					<Button Margin="5" Command="{Binding ClonePlaylistItemsFromPlaylistCommand}">
-						Clone PlaylistItems From Playlist
+						既存の再生リストから追加...
+					</Button>
+					<Button Margin="5" Command="{Binding AddOrClonePlaylistItemsCommand}">
+						チャンネル検索して追加...
 					</Button>
 				</StackPanel>
 			</Grid>
@@ -53,8 +52,9 @@
 						</DataTemplate>
 					</ComboBox.ItemTemplate>
 				</ComboBox>
-				<Button Margin="5"  Command="{Binding MovePlaylistItemAsync}" CommandParameter="{Binding SelectedItem, ElementName=PlaylistListComboBox}">
-					Move To
+				<Button Margin="5" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+						Command="{Binding MovePlaylistItemAsyncCommand}" CommandParameter="{Binding SelectedItem, ElementName=PlaylistListComboBox}">
+					再生リストへ移動
 				</Button>
 			</StackPanel>
 		</Grid>

@@ -3,12 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		Width="400" Height="225"
+		Width="360" Height="225"
         x:Class="PlaylistEditor.Views.AddPlaylistDialog"
-        Title="AddPlaylistDialog">
+        Title="再生リストを追加">
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="80"/>
 			<ColumnDefinition Width="250"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
@@ -20,7 +20,7 @@
 		<!-- タイトル -->
 		<TextBlock Grid.Row="0" Grid.Column="0"
 				   VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10">
-			Title:
+			タイトル:
 		</TextBlock>
 		<TextBox Grid.Row="0" Grid.Column="1"
 				 Text="{Binding Title}" HorizontalAlignment="Left" Height="20" Margin="10" Width="250"/>
@@ -28,7 +28,7 @@
 		<!-- 概要 -->
 		<TextBlock Grid.Row="1" Grid.Column="0" 
 				   VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10">
-			Description:
+			概要:
 		</TextBlock>
 		<TextBox Grid.Row="1" Grid.Column="1"
 				 Text="{Binding Description}"
@@ -45,7 +45,7 @@
 			</Button>
 			<Button Name="m_CancelButton"
 					Margin="10" Width="80" HorizontalContentAlignment="Center">
-				Cancel
+				キャンセル
 			</Button>
 		</StackPanel>
 	</Grid>

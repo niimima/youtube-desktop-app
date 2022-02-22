@@ -66,16 +66,28 @@ namespace PlaylistEditor.ViewModels
 			// コマンドの生成
 			Playlist = new ReactivePropertySlim<Playlist?>().AddTo(m_Disposables);
 			CanAddVideosToPlaylistItemAsync = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
+			CanRemovePlaylistItemAsync = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
+			CanMovePlaylistItemAsync = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
 			CanClonePlaylistItemsFromPlaylist = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
 			CanAddOrClonePlaylistItems = new ReactivePropertySlim<bool>().AddTo(m_Disposables);
 			Playlist.Subscribe(v => {
 				CanAddVideosToPlaylistItemAsync.Value = (v != null);
+				CanRemovePlaylistItemAsync.Value = (v != null);
+				CanMovePlaylistItemAsync.Value = (v != null);
 				CanClonePlaylistItemsFromPlaylist.Value = (v != null);
 				CanAddOrClonePlaylistItems.Value = (v != null);
                 });
 			AddVideosToPlaylistItemAsyncCommand = CanAddVideosToPlaylistItemAsync
 				.ToReactiveCommand()
 				.WithSubscribe(async () => await AddVideosToPlaylistItemAsync())
+				.AddTo(m_Disposables);
+			RemovePlaylistItemAsyncCommand = CanRemovePlaylistItemAsync
+				.ToReactiveCommand()
+				.WithSubscribe(async () => await RemovePlaylistItemAsync())
+				.AddTo(m_Disposables);
+			MovePlaylistItemAsyncCommand = CanMovePlaylistItemAsync
+				.ToReactiveCommand<IPlaylistListViewItemViewModel>()
+				.WithSubscribe(async param => await MovePlaylistItemAsync(param))
 				.AddTo(m_Disposables);
 			ClonePlaylistItemsFromPlaylistCommand = CanClonePlaylistItemsFromPlaylist
 				.ToReactiveCommand()
@@ -117,6 +129,16 @@ namespace PlaylistEditor.ViewModels
 		public ReactivePropertySlim<bool> CanAddVideosToPlaylistItemAsync { get; }
 
 		/// <summary>
+		/// プレイリストアイテムを削除できるか
+		/// </summary>
+		public ReactivePropertySlim<bool> CanRemovePlaylistItemAsync { get; }
+
+		/// <summary>
+		/// プレイリストアイテムを移動できるか
+		/// </summary>
+		public ReactivePropertySlim<bool> CanMovePlaylistItemAsync { get; }
+
+		/// <summary>
 		/// 公開されているプレイリストアイテムを自分のプレイリストアイテムとして追加できるか
 		/// </summary>
 		public ReactivePropertySlim<bool> CanClonePlaylistItemsFromPlaylist { get; }
@@ -155,6 +177,17 @@ namespace PlaylistEditor.ViewModels
 		/// 動画をプレイリストアイテムに追加するコマンド
 		/// </summary>
 		public Reactive.Bindings.ReactiveCommand AddVideosToPlaylistItemAsyncCommand { get; }
+
+		/// <summary>
+		/// プレイリストアイテムを削除するコマンド
+		/// </summary>
+		public Reactive.Bindings.ReactiveCommand RemovePlaylistItemAsyncCommand { get; }
+
+		/// <summary>
+		/// プレイリストアイテムを移動する
+		/// </summary>
+		/// <returns></returns>
+		public Reactive.Bindings.ReactiveCommand<IPlaylistListViewItemViewModel> MovePlaylistItemAsyncCommand { get; }
 
 		/// <summary>
 		/// 公開されているプレイリストアイテムを自分のプレイリストアイテムとして追加するコマンド
@@ -211,7 +244,7 @@ namespace PlaylistEditor.ViewModels
 		{
 			// ダイアログを表示
 			var resultVm = await ShowAddPlaylistItemDialog.Handle(Unit.Default);
-			if (resultVm.Result == false) return;
+			if (resultVm.Result == false || resultVm.CheckedItems.Any() == false) return;
 
 			var videos = resultVm.CheckedItems;
 			await m_YouTubeService.AddVideosToPlaylistItem(videos, Playlist.Value!);
@@ -225,7 +258,7 @@ namespace PlaylistEditor.ViewModels
 		{
 			// ダイアログを表示
 			var resultVm = await ShowClonePlaylistItemsDialog.Handle(Unit.Default);
-			if (resultVm.Result == false) return;
+			if (resultVm.Result == false || resultVm.CheckedItems.Any() == false) return;
 
 			var playlists = resultVm.CheckedItems;
 			var videos = new List<Video>();
@@ -255,6 +288,7 @@ namespace PlaylistEditor.ViewModels
             {
 				case ItemType.Playlist:
                     var playlists = resultVm.CheckedPlaylists;
+					if (playlists.Any() == false) return;
                     var videos = new List<Video>();
                     foreach (var playlist in playlists)
                     {
@@ -270,6 +304,7 @@ namespace PlaylistEditor.ViewModels
 					break;
 				case ItemType.Video:
                     var checkedVideos = resultVm.CheckedVideos;
+                    if (checkedVideos.Any() == false) return;
                     await m_YouTubeService.AddVideosToPlaylistItem(checkedVideos, Playlist.Value!);
                     await UpdatePlaylistItemList(Playlist.Value);
                     break;
@@ -284,7 +319,10 @@ namespace PlaylistEditor.ViewModels
 		/// <returns></returns>
 		public async Task RemovePlaylistItemAsync()
 		{
+			// 選択されている要素がない場合何もしない
 			var selectedItemIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.Id);
+			if (selectedItemIds.Any() == false) return;
+
 			await m_YouTubeService.RemovePlaylistItems(selectedItemIds);
 			await UpdatePlaylistItemList(Playlist.Value);
 		}
@@ -295,7 +333,10 @@ namespace PlaylistEditor.ViewModels
 		/// <returns></returns>
 		public async Task MovePlaylistItemAsync(IPlaylistListViewItemViewModel playlist)
 		{
+			// 選択されている要素がなかったり、そもそも移動先が指定されていなければ何もしない
 			var selectedItemIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.Id);
+			if (playlist == null || selectedItemIds.Any() == false) return;
+
 			var selectedItemResourceIds = PlaylistItemList.Where(item => item.IsChecked.Value).Select(item => item.ResourcesId);
 			await m_YouTubeService.MovePlaylistItems(selectedItemIds, selectedItemResourceIds, playlist.Id);
 			await UpdatePlaylistItemList(Playlist.Value);
