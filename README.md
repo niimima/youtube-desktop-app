@@ -18,7 +18,7 @@
 
 <https://iceagegeneration.com/blog/2020/06/01/auth-youtube-data-api/>
 
-その後、上記で取得したOAuthクライアントIDをReleasesフォルダの"loocal.settings.json"の、"client_id"と"client_secret"の値に置き換えてください。
+その後、上記で取得したOAuthクライアントIDをReleaseフォルダの"loocal.settings.json"の、"client_id"と"client_secret"の値に置き換えてください。
 
 もし、.NET5ランタイムがない場合は、以下URLの".NETデスクトップ ランタイム"から、自身の環境に合わせて以下からインストールしてください。
 <https://dotnet.microsoft.com/ja-jp/download/dotnet/5.0>
